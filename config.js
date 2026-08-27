@@ -1,3 +1,3 @@
 window.PORTAL_CONFIG = {
-  apiBase: ""
+  apiBase: "capacitacion-production-3120.up.railway.app"
 };
