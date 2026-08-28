@@ -3,7 +3,44 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#081c2c">
     <title>Evaluaciones presenciales | Galeam</title>
-    <link rel="stylesheet" href="styles.css"></head>
+    <link rel="stylesheet" href="styles.css">
+  <style>
+  body {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+  }
+
+  .video-fondo {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+    display: block !important;
+    z-index: 0 !important;
+    pointer-events: none;
+  }
+
+  .capa-fondo {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      rgba(3, 17, 28, 0.86),
+      rgba(8, 28, 44, 0.62),
+      rgba(12, 43, 64, 0.58)
+    );
+  }
+
+  .topbar,
+  .shell {
+    position: relative;
+    z-index: 2;
+  }
+</style></head>
   <body>
     <video class="video-fondo" autoplay muted loop playsinline preload="metadata">
   <source src="fondo.mp4" type="video/mp4">
