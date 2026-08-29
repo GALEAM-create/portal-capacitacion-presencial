@@ -1,89 +1,235 @@
-<!doctype html><html lang="es">
-  <head><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#081c2c">
-    <title>Evaluaciones presenciales | Galeam</title>
-    <link rel="stylesheet" href="styles.css">
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081c2c">
+
+  <title>Evaluaciones presenciales | Galeam</title>
+
+  <link rel="stylesheet" href="styles.css">
+
   <style>
-  body {
-    position: relative;
-    isolation: isolate;
-    overflow-x: hidden;
-  }
+    body {
+      position: relative;
+      isolation: isolate;
+      overflow-x: hidden;
+    }
 
-  .video-fondo {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    object-fit: cover !important;
-    display: block !important;
-    z-index: 0 !important;
-    pointer-events: none;
-  }
+    .video-fondo {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-  .capa-fondo {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 1 !important;
-    pointer-events: none;
-    background: linear-gradient(
-      110deg,
-      rgba(3, 17, 28, 0.86),
-      rgba(8, 28, 44, 0.62),
-      rgba(12, 43, 64, 0.58)
-    );
-  }
+    .capa-fondo {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        110deg,
+        rgba(3, 17, 28, 0.86),
+        rgba(8, 28, 44, 0.62),
+        rgba(12, 43, 64, 0.58)
+      );
+    }
 
-  .topbar,
-  .shell {
-    position: relative;
-    z-index: 2;
-  }
-</style></head>
-  <body>
-    <video class="video-fondo" autoplay muted loop playsinline preload="metadata">
-  <source src="fondo.mp4" type="video/mp4">
-</video>
+    .topbar,
+    .shell {
+      position: relative;
+      z-index: 2;
+    }
 
-<div class="capa-fondo"></div>
-    
-<img
-  src="casco.png"
-  alt="Casco Hoplon"
-  style="
-    width: 42px;
-    height: 58px;
-    object-fit: contain;
-    display: block;
-    flex: 0 0 42px;
-   
-  "
+    .casco-logo {
+      width: 42px;
+      height: 58px;
+      object-fit: contain;
+      display: block;
+      flex: 0 0 42px;
+      filter: drop-shadow(
+        0 5px 10px rgba(0, 0, 0, 0.35)
+      );
+    }
+  </style>
+</head>
 
->
-  </div>
-  <div><b>HOPLON</b><small>FORMACIÓN PROFESIONAL</small></div></div>
-  <span class="mode">MODALIDAD PRESENCIAL</span></header>
-<main class="shell"><section id="loginView" class="login-grid"><div class="intro">
-  <span class="eyebrow">Evaluación de conocimientos</span>
-  <h1>Capacitación presencial</h1>
-  <p>Ingresa con los mismos datos de la plataforma de capacitación. Aquí encontrarás únicamente las evaluaciones finales de los cursos que tomaste de manera presencial.</p></div>
-  <form id="loginForm" class="card">
-    <h2>Identifica tu registro</h2>
-    <p>Escribe tus datos tal como fueron registrados.</p>
-    <label for="nombre">Nombre completo</label>
-    <input id="nombre" name="nombre" type="text" autocomplete="name" required>
-    <label for="numeroEmpleado">Número de empleado</label>
-    <input id="numeroEmpleado" name="numero_empleado" type="text" inputmode="numeric" required><button id="loginButton" class="btn btn-primary" type="submit">Ingresar</button>
-    <div id="loginMessage" class="message" role="alert"></div></form></section>
-<section id="dashboardView" class="dashboard"><div class="welcome">
-  <div><span class="eyebrow">Evaluaciones disponibles</span><h1 id="welcomeName">Bienvenido</h1></div>
-  <div class="profile"><span id="employeeNumber"></span>
-    <br><span id="serviceName"></span>
-    <br><button id="logoutButton" class="logout" type="button">Cerrar sesión</button></div></div>
-  <article class="course"><div><span class="tag">PRESENCIAL</span><h2>Manejo de conflictos y comunicación asertiva</h2><p>Evaluación final de 5 preguntas. Necesitas obtener al menos 70 puntos para acreditar.</p></div><a class="btn" href="evaluacion.html">Comenzar evaluación</a></article></section></main>
-<script src="config.js"></script><script src="portal.js">
-  
-</script>
-  </body>
+<body>
+
+  <video
+    class="video-fondo"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+  >
+    <source src="fondo.mp4" type="video/mp4">
+  </video>
+
+  <div class="capa-fondo"></div>
+
+  <header class="topbar">
+    <div class="brand">
+
+      <img
+        class="casco-logo"
+        src="casco.png"
+        alt="Casco Hoplon"
+      >
+
+      <div>
+        <b>HOPLON</b>
+        <small>FORMACIÓN PROFESIONAL</small>
+      </div>
+
+    </div>
+
+    <span class="mode">
+      MODALIDAD PRESENCIAL
+    </span>
+  </header>
+
+  <main class="shell">
+
+    <section id="loginView" class="login-grid">
+
+      <div class="intro">
+        <span class="eyebrow">
+          Evaluación de conocimientos
+        </span>
+
+        <h1>Capacitación presencial</h1>
+
+        <p>
+          Ingresa con los mismos datos de la plataforma
+          de capacitación. Aquí encontrarás únicamente
+          las evaluaciones finales de los cursos que
+          tomaste de manera presencial.
+        </p>
+      </div>
+
+      <form id="loginForm" class="card">
+
+        <h2>Identifica tu registro</h2>
+
+        <p>
+          Escribe tus datos tal como fueron registrados.
+        </p>
+
+        <label for="nombre">
+          Nombre completo
+        </label>
+
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          autocomplete="name"
+          required
+        >
+
+        <label for="numeroEmpleado">
+          Número de empleado
+        </label>
+
+        <input
+          id="numeroEmpleado"
+          name="numero_empleado"
+          type="text"
+          inputmode="numeric"
+          required
+        >
+
+        <button
+          id="loginButton"
+          class="btn btn-primary"
+          type="submit"
+        >
+          Ingresar
+        </button>
+
+        <div
+          id="loginMessage"
+          class="message"
+          role="alert"
+        ></div>
+
+      </form>
+    </section>
+
+    <section
+      id="dashboardView"
+      class="dashboard"
+    >
+
+      <div class="welcome">
+
+        <div>
+          <span class="eyebrow">
+            Evaluaciones disponibles
+          </span>
+
+          <h1 id="welcomeName">
+            Bienvenido
+          </h1>
+        </div>
+
+        <div class="profile">
+          <span id="employeeNumber"></span>
+          <br>
+
+          <span id="serviceName"></span>
+          <br>
+
+          <button
+            id="logoutButton"
+            class="logout"
+            type="button"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+      </div>
+
+      <article class="course">
+
+        <div>
+          <span class="tag">
+            PRESENCIAL
+          </span>
+
+          <h2>
+            Manejo de conflictos y comunicación asertiva
+          </h2>
+
+          <p>
+            Evaluación final de 5 preguntas.
+            Necesitas obtener al menos 70 puntos
+            para acreditar.
+          </p>
+        </div>
+
+        <a
+          class="btn"
+          href="evaluacion.html"
+        >
+          Comenzar evaluación
+        </a>
+
+      </article>
+
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="portal.js"></script>
+
+</body>
 </html>
