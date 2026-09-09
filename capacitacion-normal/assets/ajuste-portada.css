@@ -1,0 +1,35 @@
+/* Ajustes de separación para la portada en formato horizontal */
+@media (min-width: 1101px) {
+  .brand img { width: clamp(190px, 20vw, 310px); }
+  .copy {
+    width: 53%;
+    padding-top: clamp(210px, 29vh, 305px);
+    padding-left: clamp(28px, 6.2vw, 108px);
+  }
+  .copy h1 {
+    font-size: clamp(3.1rem, 6.25vw, 6.65rem);
+    line-height: .88;
+  }
+  .visual {
+    right: -10%;
+    top: 5%;
+    width: 52%;
+    height: 82%;
+  }
+  .diamond { width: min(38vw, 610px); }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .brand img { width: 250px; }
+  .copy {
+    width: 54%;
+    padding-top: 215px;
+    padding-left: 55px;
+  }
+  .copy h1 {
+    font-size: 5.2vw;
+    line-height: .9;
+  }
+  .visual { right: -12%; }
+  .diamond { width: 39vw; }
+}
