@@ -1,7 +1,7 @@
 const A='assets/';
-const nav=(n,prev,next)=>`<nav class="page-nav" aria-label="Navegación del curso"><a href="#${prev}">← Anterior</a><span class="page-number">${String(n).padStart(2,'0')} / 18</span>${next?`<a href="#${next}">Siguiente →</a>`:'<a href="#portada">Inicio ↑</a>'}</nav>`;
+const nav=(n,prev,next)=>`<nav class="page-nav" aria-label="Navegación del curso"><a href="#${prev}">← Anterior</a><span class="page-number">${String(n).padStart(2,'0')} / 19</span>${next?`<a href="#${next}">Siguiente →</a>`:'<a href="#portada">Inicio ↑</a>'}</nav>`;
 const diamond=(src,alt)=>`<div class="visual-stack"><div class="rhombus"><img src="${A+src}" alt="${alt}"></div></div>`;
-const page=(n,title,content,visual,extra='')=>`<section class="lesson-page ${extra}" id="cuartilla-${n}" aria-labelledby="titulo-${n}"><header class="lesson-head"><h2 id="titulo-${n}">${title}</h2></header><div class="lesson-grid"><div class="lesson-content">${content}</div>${visual}</div>${nav(n,n===3?'contenido':`cuartilla-${n-1}`,n===18?'':`cuartilla-${n+1}`)}</section>`;
+const page=(n,title,content,visual,extra='')=>`<section class="lesson-page ${extra}" id="cuartilla-${n}" aria-labelledby="titulo-${n}"><header class="lesson-head"><h2 id="titulo-${n}">${title}</h2></header><div class="lesson-grid"><div class="lesson-content">${content}</div>${visual}</div>${nav(n,n===3?'contenido':`cuartilla-${n-1}`,n===19?'':`cuartilla-${n+1}`)}</section>`;
 
 const pages=[];
 pages.push(page(3,'Responsabilidades del Guardia',`
@@ -89,7 +89,23 @@ pages.push(page(14,'Emergencias',`
 pages.push(`<section class="lesson-page" id="cuartilla-15" aria-labelledby="titulo-15"><div class="poster-layout"><h2 class="poster-title" id="titulo-15">Códigos de emergencia</h2><button class="poster-button" data-full="${A}codigos-1.png" aria-label="Ampliar primera infografía de códigos de emergencia"><img src="${A}codigos-1.png" alt="Códigos rojo, naranja, blanco y negro"></button></div>${nav(15,'cuartilla-14','cuartilla-16')}</section>`);
 pages.push(`<section class="lesson-page" id="cuartilla-16" aria-labelledby="titulo-16"><div class="poster-layout"><button class="poster-button" data-full="${A}codigos-2.png" aria-label="Ampliar segunda infografía de códigos de emergencia"><img src="${A}codigos-2.png" alt="Códigos gris, ámbar, café, azul, verde, violeta, oro y Adam"></button>${diamond('elemento-seguridad.png','Elemento de seguridad')}</div>${nav(16,'cuartilla-15','cuartilla-17')}</section>`);
 pages.push(`<section class="lesson-page transition" id="cuartilla-17" aria-labelledby="titulo-17"><h2 id="titulo-17">Actividad<br>práctica</h2>${nav(17,'cuartilla-16','cuartilla-18')}</section>`);
-pages.push(`<section class="lesson-page thanks-page" id="cuartilla-18" aria-labelledby="titulo-18"><div class="thanks-copy"><h2 id="titulo-18">Gracias</h2><blockquote>“El éxito es la suma de pequeños esfuerzos, repetidos día tras día.”</blockquote><cite>Robert Collier</cite></div>${diamond('cierre.png','Elemento de seguridad')}${nav(18,'cuartilla-17','')}</section>`);
+
+const questions=[
+  ['¿En qué consiste un código blanco?',['Indica un asalto','Indica que hay un asociado o cliente lesionado o existe una emergencia médica.','Indica que hay una emergencia por incendio en la unidad','Indica que un niño está perdido.'],1],
+  ['¿Qué debe hacer el guardia si detecta una anomalía o conducta irregular?',['Esperar a que termine el turno','Ignorarla si no representa un riesgo inmediato','Reportarla de inmediato a Seguridad Corporativa','Informarla únicamente a sus compañeros'],2],
+  ['¿Qué personas tienen prohibido el acceso al corporativo?',['Asociados con gafete','Proveedores registrados','Vendedores ambulantes, promotores y personas ajenas a la compañía','Visitantes previamente anunciados'],2],
+  ['¿Qué debe hacer un asociado que no cuenta con gafete?',['Ingresar sin identificación','Solicitar un gafete provisional con chip contra identificación oficial vigente','Utilizar el gafete de otro asociado','Esperar hasta el siguiente turno'],1],
+  ['¿Qué identificación NO es aceptada para proporcionar un gafete provisional?',['INE','Licencia de conducir','Pasaporte','Identificación oficial vigente'],2],
+  ['Cuando un visitante ingresa al edificio, ¿quién es responsable de acompañarlo durante toda su estancia?',['El guardia','Recepción','El asociado que recibe al visitante','El proveedor'],2],
+  ['¿Qué debe hacer el guardia si encuentra a un visitante sin acompañante?',['Permitirle continuar','Abordarlo y conducirlo de inmediato a recepción','Solicitarle que abandone el edificio','Esperar a que aparezca el asociado'],1],
+  ['¿Qué requisito se establece para realizar trabajos de riesgo?',['Únicamente presentar una identificación','Contar con EPP y los permisos especiales correspondientes','Realizarlos solamente después de las 18:00 hrs.','No requieren autorización si son trabajos menores'],1],
+  ['¿Qué debe hacer el guardia ante una emergencia detectada en el edificio?',['Resolverla por cuenta propia','Informar inmediatamente al CMNET y al CAE','Esperar instrucciones del siguiente turno','Únicamente llamar a un compañero'],1],
+  ['Durante una visita de una autoridad, ¿cuál es la conducta correcta del elemento de seguridad?',['Negarse a proporcionar cualquier información','Impedir el acceso hasta que termine la visita','Mantener una actitud amable e informar inmediatamente al líder de Seguridad Corporativa','Permitir el acceso sin informar a nadie'],2]
+];
+const letters=['A','B','C','D'];
+const quiz=questions.map((question,index)=>`<fieldset class="question"><legend>${index+1}. ${question[0]}</legend><div class="options">${question[1].map((option,optionIndex)=>`<label><input type="radio" name="q${index}" value="${optionIndex}" required><span><strong>${letters[optionIndex]})</strong> ${option}</span></label>`).join('')}</div></fieldset>`).join('');
+pages.push(`<section class="lesson-page quiz-page" id="cuartilla-18" aria-labelledby="titulo-18"><header class="lesson-head"><h2 id="titulo-18">Evaluación</h2></header><div class="quiz-intro"><p>Contesta las 10 preguntas. Dispones de 15 minutos.</p><div class="timer" id="timer" aria-live="polite">15:00</div></div><form id="quiz-form">${quiz}<button class="submit-quiz" type="submit">Finalizar evaluación</button><p class="quiz-result" id="quiz-result" aria-live="polite"></p></form>${nav(18,'cuartilla-17','cuartilla-19')}</section>`);
+pages.push(`<section class="lesson-page thanks-page" id="cuartilla-19" aria-labelledby="titulo-19"><div class="thanks-copy"><h2 id="titulo-19">Gracias</h2><blockquote>“El éxito es la suma de pequeños esfuerzos, repetidos día tras día.”</blockquote><cite>Robert Collier</cite></div>${diamond('cierre.png','Elemento de seguridad')}${nav(19,'cuartilla-18','')}</section>`);
 
 document.querySelector('#course-pages').innerHTML=pages.join('');
 
@@ -97,6 +113,33 @@ const viewer=document.querySelector('#image-viewer');
 document.addEventListener('click',e=>{const button=e.target.closest('.poster-button');if(!button)return;viewer.querySelector('img').src=button.dataset.full;viewer.querySelector('img').alt=button.querySelector('img').alt;viewer.showModal();});
 viewer.querySelector('button').addEventListener('click',()=>viewer.close());
 viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.close();});
+
+let remaining=15*60;
+let quizTimer=null;
+const timer=document.querySelector('#timer');
+const startQuizTimer=()=>{
+  if(quizTimer||remaining<=0)return;
+  quizTimer=setInterval(()=>{
+    remaining=Math.max(0,remaining-1);
+    timer.textContent=`${String(Math.floor(remaining/60)).padStart(2,'0')}:${String(remaining%60).padStart(2,'0')}`;
+    if(!remaining){clearInterval(quizTimer);quizTimer=null;timer.textContent='Tiempo terminado';}
+  },1000);
+};
+document.querySelector('#quiz-form').addEventListener('submit',event=>{
+  event.preventDefault();
+  let score=0;
+  questions.forEach((question,index)=>{
+    const selected=event.currentTarget.querySelector(`[name="q${index}"]:checked`);
+    if(selected&&Number(selected.value)===question[2])score++;
+  });
+  if(quizTimer){clearInterval(quizTimer);quizTimer=null;}
+  const quizPage=document.querySelector('#cuartilla-18');
+  const result=document.querySelector('#quiz-result');
+  quizPage.classList.add('quiz-complete');
+  result.textContent=`Resultado: ${score} de 10 respuestas correctas (${score*10}/100).`;
+  result.style.color=score>=8?'#176b42':'#a33131';
+  result.scrollIntoView({behavior:'smooth',block:'center'});
+});
 
 // Una sola cuartilla visible. El desplazamiento sirve únicamente para leer
 // contenido largo dentro de la cuartilla actual; el cambio de página se hace
@@ -109,6 +152,7 @@ const showSection=()=>{
   courseSections.forEach(section=>{section.hidden=section!==active;});
   document.body.classList.add('course-paged');
   document.title=`${active.querySelector('h1,h2')?.textContent.trim()||'Consignas específicas'} | Walmart Diamante`;
+  if(active.id==='cuartilla-18')startQuizTimer();
   window.scrollTo({top:0,left:0,behavior:'auto'});
 };
 window.addEventListener('hashchange',showSection);
@@ -135,6 +179,8 @@ document.addEventListener('touchend',event=>{
   if(Math.abs(deltaX)<60||Math.abs(deltaX)<=Math.abs(deltaY)*1.25)return;
 
   const activeIndex=courseSections.findIndex(section=>!section.hidden);
+  const current=courseSections[activeIndex];
+  if(deltaX<0&&current?.id==='cuartilla-18'&&!current.classList.contains('quiz-complete'))return;
   const destination=deltaX<0
     ? courseSections[activeIndex+1]
     : courseSections[activeIndex-1];

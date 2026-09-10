@@ -9,6 +9,7 @@ html{scroll-snap-type:none}
 .course-paged .cover,
 .course-paged .contents-page,
 .course-paged .lesson-page{scroll-snap-align:none}
+.quiz-page:not(.quiz-complete) .page-nav a:last-child{visibility:hidden;pointer-events:none}
 
 @media(max-width:600px){
   *,*::before,*::after{box-sizing:border-box}
