@@ -37,11 +37,26 @@ html{scroll-snap-type:none}
   .clean-list{gap:10px}
   .clean-list li{padding-left:22px}
   .visual-stack{
-    min-height:320px;
-    margin:4px 0 18px;
-    overflow:visible;
+    min-height:240px;
+    margin:10px 0 22px;
+    overflow:hidden;
   }
-  .rhombus{width:min(54vw,210px);border-width:7px}
+  .rhombus{
+    width:min(54vw,210px);
+    transform:none;
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+    border:0;
+    border-radius:0;
+    padding:7px;
+    background:#5f82ad;
+  }
+  .rhombus img{
+    width:100%;
+    height:100%;
+    transform:none;
+    object-fit:cover;
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  }
   .double-visual{gap:12px;justify-items:center;margin:18px 0 24px}
   .double-visual .rhombus{width:min(35vw,150px);border-width:6px}
   .poster-layout{grid-template-columns:1fr;gap:16px}
@@ -66,7 +81,7 @@ html{scroll-snap-type:none}
 @media(max-width:370px){
   .lesson-page{padding-inline:12px}
   .lesson-head h2{font-size:1.55rem;line-height:1.08}
-  .visual-stack{min-height:290px}
+  .visual-stack{min-height:220px}
   .rhombus{width:min(52vw,190px)}
   .double-visual .rhombus{width:33vw}
   .page-nav a{font-size:.58rem;letter-spacing:.05em}
