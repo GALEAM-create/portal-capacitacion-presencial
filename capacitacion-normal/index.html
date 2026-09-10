@@ -1,262 +1,83 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#081c2c">
-
-  <title>Capacitación presencial | Galeam</title>
-
-  <link rel="stylesheet" href="styles.css">
-
-  <style>
-    body {
-      position: relative;
-      isolation: isolate;
-      overflow-x: hidden;
-    }
-
-    .video-fondo {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      display: block;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .capa-fondo {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: linear-gradient(
-        110deg,
-        rgba(3, 17, 28, 0.86),
-        rgba(8, 28, 44, 0.62),
-        rgba(12, 43, 64, 0.58)
-      );
-    }
-
-    .topbar,
-    .shell {
-      position: relative;
-      z-index: 2;
-    }
-
-    .casco-logo {
-      width: 42px;
-      height: 58px;
-      object-fit: contain;
-      display: block;
-      flex: 0 0 42px;
-      filter: drop-shadow(
-        0 5px 10px rgba(0, 0, 0, 0.35)
-      );
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#243f69">
+  <title>Consignas específicas | Walmart Diamante</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/ajuste-portada.css">
+  <link rel="stylesheet" href="assets/contenido.css">
+  <link rel="stylesheet" href="assets/curso.css">
 </head>
-
 <body>
+  <main class="cover" id="portada" aria-labelledby="course-title">
+    <div class="wash wash-one" aria-hidden="true"></div>
+    <div class="wash wash-two" aria-hidden="true"></div>
 
-  <video
-    class="video-fondo"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-  >
-    <source src="fondo.mp4" type="video/mp4">
-  </video>
-
-  <div class="capa-fondo"></div>
-
-  <header class="topbar">
-    <div class="brand">
-
-      <img
-        class="casco-logo"
-        src="casco.png"
-        alt="Casco Hoplon"
-      >
-
-      <div>
-        <b>HOPLON</b>
-        <small>FORMACIÓN PROFESIONAL</small>
+    <section class="copy">
+      <p class="eyebrow">Capacitación operativa</p>
+      <h1 id="course-title">Consignas<br><span>específicas</span></h1>
+      <div class="service" aria-label="Servicio Walmart Diamante">
+        <strong>Walmart</strong><span>Diamante</span>
       </div>
-
-    </div>
-
-    <span class="mode">
-      MODALIDAD PRESENCIAL
-    </span>
-  </header>
-
-  <main class="shell">
-
-    <section id="loginView" class="login-grid">
-
-      <div class="intro">
-        <span class="eyebrow">
-          Formación y evaluación
-        </span>
-
-        <h1>Capacitación presencial</h1>
-
-        <p>
-          Ingresa con los mismos datos de la plataforma
-          de capacitación. Aquí encontrarás los cursos
-          disponibles y las evaluaciones finales de la
-          modalidad presencial.
-        </p>
-      </div>
-
-      <form id="loginForm" class="card">
-
-        <h2>Identifica tu registro</h2>
-
-        <p>
-          Escribe tus datos tal como fueron registrados.
-        </p>
-
-        <label for="nombre">
-          Nombre completo
-        </label>
-
-        <input
-          id="nombre"
-          name="nombre"
-          type="text"
-          autocomplete="name"
-          required
-        >
-
-        <label for="numeroEmpleado">
-          Número de empleado
-        </label>
-
-        <input
-          id="numeroEmpleado"
-          name="numero_empleado"
-          type="text"
-          inputmode="numeric"
-          required
-        >
-
-        <button
-          id="loginButton"
-          class="btn btn-primary"
-          type="submit"
-        >
-          Ingresar
-        </button>
-
-        <div
-          id="loginMessage"
-          class="message"
-          role="alert"
-        ></div>
-
-      </form>
+      <p class="date">Septiembre 2026</p>
     </section>
 
-    <section
-      id="dashboardView"
-      class="dashboard"
-    >
-
-      <div class="welcome">
-
-        <div>
-          <span class="eyebrow">
-            Contenido disponible
-          </span>
-
-          <h1 id="welcomeName">
-            Bienvenido
-          </h1>
-        </div>
-
-        <div class="profile">
-          <span id="employeeNumber"></span>
-          <br>
-
-          <span id="serviceName"></span>
-          <br>
-
-          <button
-            id="logoutButton"
-            class="logout"
-            type="button"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-
+    <section class="visual" aria-label="Walmart Diamante">
+      <div class="diamond">
+        <img src="assets/walmart-diamante.png" alt="Exterior del inmueble Walmart Diamante">
       </div>
-
-      <article class="course">
-
-        <div>
-          <span class="tag">
-            CURSO
-          </span>
-
-          <h2>
-            Consignas específicas — Walmart Diamante
-          </h2>
-
-          <p>
-            Consulta el material operativo del servicio:
-            responsabilidades, controles, emergencias y
-            protocolos de actuación.
-          </p>
-        </div>
-
-        <a
-          class="btn"
-          href="capacitacion-normal/#portada"
-        >
-          Abrir curso
-        </a>
-
-      </article>
-
-      <article class="course">
-
-        <div>
-          <span class="tag">
-            PRESENCIAL
-          </span>
-
-          <h2>
-            Manejo de conflictos y comunicación asertiva
-          </h2>
-
-          <p>
-            Evaluación final de 5 preguntas.
-            Necesitas obtener al menos 70 puntos
-            para acreditar.
-          </p>
-        </div>
-
-        <a
-          class="btn"
-          href="evaluacion.html"
-        >
-          Comenzar evaluación
-        </a>
-
-      </article>
-
     </section>
+
+    <div class="rings" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <nav class="pager" aria-label="Navegación del curso">
+      <span>01</span>
+      <span class="line"></span>
+      <a href="#contenido">Siguiente <b>→</b></a>
+    </nav>
   </main>
 
-  <script src="config.js"></script>
-  <script src="portal.js"></script>
+  <section class="contents-page" id="contenido" aria-labelledby="contents-title">
+    <div class="contents-dots dots-left" aria-hidden="true"></div>
+    <div class="contents-dots dots-right" aria-hidden="true"></div>
 
+    <div class="contents-photo" aria-hidden="true">
+      <div class="contents-diamond">
+        <img src="assets/walmart-diamante-aerea.png" alt="Vista aérea del inmueble Walmart Diamante">
+      </div>
+    </div>
+
+    <div class="contents-copy">
+      <p class="contents-kicker">Temario</p>
+      <h2 id="contents-title">Contenido</h2>
+      <ol class="topic-list">
+        <li><span>01</span>Responsabilidades del Guardia</li>
+        <li><span>02</span>Normas de Conducta y Control</li>
+        <li><span>03</span>Identificación de Personal</li>
+        <li><span>04</span>Control de Visitas y Proveedores</li>
+        <li><span>05</span>Acceso de Menores al Edificio</li>
+        <li><span>06</span>Trabajos de Riesgo y Valores</li>
+        <li><span>07</span>Rondines y Ciclo de Alarmado</li>
+        <li><span>08</span>Directorio Rápido y Emergencias</li>
+        <li><span>09</span>Escalamiento e Infraestructura</li>
+        <li class="evaluation"><span>10</span>Evaluación</li>
+      </ol>
+    </div>
+
+    <nav class="contents-pager" aria-label="Navegación del curso">
+      <a href="#portada"><b>←</b> Anterior</a>
+      <span>02</span>
+      <span class="contents-line"></span>
+      <a href="#cuartilla-3">Siguiente <b>→</b></a>
+    </nav>
+  </section>
+  <div id="course-pages"></div>
+  <dialog id="image-viewer" aria-label="Vista ampliada de la infografía">
+    <button type="button" aria-label="Cerrar imagen">×</button>
+    <img alt="">
+  </dialog>
+  <script src="assets/curso.js"></script>
 </body>
 </html>
