@@ -59,7 +59,7 @@ html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
   .contents-page { min-height:100svh;padding-bottom:92px; }
   .contents-brand { top:24px;left:24px; }.contents-brand img { width:155px; }
   .contents-dots { display:none; }
-  .contents-copy { width:100%;margin:0;padding:125px 24px 30px; }
+  .contents-copy { width:100%;margin:0;padding:58px 24px 30px; }
   .contents-copy h2 { text-align:left;font-size:3.3rem;margin-bottom:26px; }
   .contents-kicker { text-align:left; }
   .topic-list { gap:14px; }

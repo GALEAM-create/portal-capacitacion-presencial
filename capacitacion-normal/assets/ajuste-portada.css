@@ -3,7 +3,7 @@
   .brand img { width: clamp(190px, 20vw, 310px); }
   .copy {
     width: 53%;
-    padding-top: clamp(210px, 29vh, 305px);
+    padding-top: clamp(105px, 16vh, 165px);
     padding-left: clamp(28px, 6.2vw, 108px);
   }
   .copy h1 {
@@ -23,7 +23,7 @@
   .brand img { width: 250px; }
   .copy {
     width: 54%;
-    padding-top: 215px;
+    padding-top: 120px;
     padding-left: 55px;
   }
   .copy h1 {
@@ -32,4 +32,8 @@
   }
   .visual { right: -12%; }
   .diamond { width: 39vw; }
+}
+
+@media (max-width: 760px) {
+  .copy { padding-top: 64px; }
 }

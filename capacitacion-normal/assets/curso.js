@@ -1,8 +1,7 @@
 const A='assets/';
-const logo=`<img src="${A}hoplon-capacitacion.png" alt="Hoplon Capacitación">`;
 const nav=(n,prev,next)=>`<nav class="page-nav" aria-label="Navegación del curso"><a href="#${prev}">← Anterior</a><span class="page-number">${String(n).padStart(2,'0')} / 18</span>${next?`<a href="#${next}">Siguiente →</a>`:'<a href="#portada">Inicio ↑</a>'}</nav>`;
 const diamond=(src,alt)=>`<div class="visual-stack"><div class="rhombus"><img src="${A+src}" alt="${alt}"></div></div>`;
-const page=(n,title,content,visual,extra='')=>`<section class="lesson-page ${extra}" id="cuartilla-${n}" aria-labelledby="titulo-${n}"><header class="lesson-head">${logo}<h2 id="titulo-${n}">${title}</h2></header><div class="lesson-grid"><div class="lesson-content">${content}</div>${visual}</div>${nav(n,n===3?'contenido':`cuartilla-${n-1}`,n===19?'':`cuartilla-${n+1}`)}</section>`;
+const page=(n,title,content,visual,extra='')=>`<section class="lesson-page ${extra}" id="cuartilla-${n}" aria-labelledby="titulo-${n}"><header class="lesson-head"><h2 id="titulo-${n}">${title}</h2></header><div class="lesson-grid"><div class="lesson-content">${content}</div>${visual}</div>${nav(n,n===3?'contenido':`cuartilla-${n-1}`,n===18?'':`cuartilla-${n+1}`)}</section>`;
 
 const pages=[];
 pages.push(page(3,'Responsabilidades del Guardia',`
@@ -114,3 +113,30 @@ const showSection=()=>{
 };
 window.addEventListener('hashchange',showSection);
 showSection();
+
+// Navegación táctil en móvil: deslizar a la izquierda avanza y deslizar
+// a la derecha regresa. Los movimientos verticales siguen desplazando el
+// contenido de la cuartilla sin activar un cambio accidental.
+let touchStartX=0;
+let touchStartY=0;
+let touchStartedOnControl=false;
+
+document.addEventListener('touchstart',event=>{
+  if(!matchMedia('(max-width: 760px)').matches||event.touches.length!==1)return;
+  touchStartedOnControl=Boolean(event.target.closest('a,button,input,label,dialog'));
+  touchStartX=event.touches[0].clientX;
+  touchStartY=event.touches[0].clientY;
+},{passive:true});
+
+document.addEventListener('touchend',event=>{
+  if(!matchMedia('(max-width: 760px)').matches||touchStartedOnControl||!event.changedTouches.length)return;
+  const deltaX=event.changedTouches[0].clientX-touchStartX;
+  const deltaY=event.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(deltaX)<60||Math.abs(deltaX)<=Math.abs(deltaY)*1.25)return;
+
+  const activeIndex=courseSections.findIndex(section=>!section.hidden);
+  const destination=deltaX<0
+    ? courseSections[activeIndex+1]
+    : courseSections[activeIndex-1];
+  if(destination)location.hash=destination.id;
+},{passive:true});

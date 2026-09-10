@@ -12,7 +12,7 @@ html{scroll-snap-type:none}
 
 @media(max-width:600px){
   *,*::before,*::after{box-sizing:border-box}
-  body{min-width:0;overflow-x:hidden}
+  body{min-width:0;overflow-x:hidden;touch-action:pan-y}
   .lesson-page{
     width:100%;
     min-height:100svh;
