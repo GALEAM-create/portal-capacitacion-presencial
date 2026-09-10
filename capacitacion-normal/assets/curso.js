@@ -119,3 +119,19 @@ let remaining=15*60;
 const timer=document.querySelector('#timer');
 const tick=setInterval(()=>{remaining=Math.max(0,remaining-1);timer.textContent=`${String(Math.floor(remaining/60)).padStart(2,'0')}:${String(remaining%60).padStart(2,'0')}`;if(!remaining){clearInterval(tick);timer.textContent='Tiempo terminado';}},1000);
 document.querySelector('#quiz-form').addEventListener('submit',e=>{e.preventDefault();let score=0;questions.forEach((q,i)=>{const selected=e.currentTarget.querySelector(`[name="q${i}"]:checked`);if(selected&&Number(selected.value)===q[2])score++;});const result=document.querySelector('#quiz-result');result.textContent=`Resultado: ${score} de 10 respuestas correctas (${score*10}/100).`;result.style.color=score>=8?'#176b42':'#a33131';result.scrollIntoView({behavior:'smooth',block:'center'});});
+
+// Una sola cuartilla visible. El desplazamiento sirve únicamente para leer
+// contenido largo dentro de la cuartilla actual; el cambio de página se hace
+// desde los botones Anterior/Siguiente o con el historial del navegador.
+const courseSections=[...document.querySelectorAll('.cover,.contents-page,.lesson-page')];
+const validSection=id=>courseSections.find(section=>section.id===id);
+const showSection=()=>{
+  const requested=decodeURIComponent(location.hash.slice(1));
+  const active=validSection(requested)||document.querySelector('#portada');
+  courseSections.forEach(section=>{section.hidden=section!==active;});
+  document.body.classList.add('course-paged');
+  document.title=`${active.querySelector('h1,h2')?.textContent.trim()||'Consignas específicas'} | Walmart Diamante`;
+  window.scrollTo({top:0,left:0,behavior:'auto'});
+};
+window.addEventListener('hashchange',showSection);
+showSection();
