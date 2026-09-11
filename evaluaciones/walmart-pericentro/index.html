@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Evaluación presencial de consignas específicas para Walmart Pericentro">
+  <title>Evaluación presencial | Walmart Pericentro</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070a10'/%3E%3Cpath d='M18 17h28v8H27v7h17v8H27v15h-9z' fill='%23f4c44e'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --fondo: #05070b;
+      --panel: rgba(13, 17, 24, .94);
+      --texto: #f7f8fa;
+      --muted: #aeb7c5;
+      --dorado: #f4c44e;
+      --dorado-2: #bd8d2e;
+      --rojo: #c72b34;
+      --borde: rgba(244, 196, 78, .23);
+      --verde: #40d58d;
+      --error: #ff8790;
+      --radio: 20px;
+      --sombra: 0 24px 70px rgba(0, 0, 0, .48);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--texto);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(244, 196, 78, .16), transparent 30rem),
+        radial-gradient(circle at 88% 8%, rgba(199, 43, 52, .15), transparent 28rem),
+        linear-gradient(145deg, #030407, #0a0e15 52%, #05070b);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .12;
+      background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+    button, input { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+      padding: 12px clamp(18px, 4vw, 46px);
+      border-bottom: 1px solid var(--borde);
+      background: rgba(5, 7, 11, .88);
+      backdrop-filter: blur(18px);
+    }
+    .marca { display: flex; align-items: center; gap: 12px; }
+    .marca-sello {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(244, 196, 78, .55);
+      border-radius: 13px;
+      color: #111;
+      background: linear-gradient(145deg, #ffe08a, #bd8d2e);
+      font-weight: 900;
+      box-shadow: 0 0 28px rgba(244, 196, 78, .18);
+    }
+    .marca strong { display: block; letter-spacing: .08em; }
+    .marca small, .topbar > span { color: var(--muted); font-size: .8rem; }
+    main {
+      position: relative;
+      width: min(100% - 28px, 920px);
+      margin: clamp(24px, 5vw, 52px) auto 72px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding: clamp(24px, 5vw, 48px);
+      border: 1px solid var(--borde);
+      border-radius: 28px 28px 0 0;
+      background: linear-gradient(130deg, rgba(244, 196, 78, .12), rgba(199, 43, 52, .08) 52%, transparent);
+      box-shadow: var(--sombra);
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--dorado);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 690px;
+      margin: 0;
+      font-size: clamp(2rem, 5.8vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+    .hero p:last-child { max-width: 680px; margin: 18px 0 0; color: #d4dae3; line-height: 1.65; }
+    .duracion {
+      min-width: 125px;
+      padding: 16px;
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      background: rgba(0,0,0,.24);
+      text-align: center;
+    }
+    .duracion strong { display: block; color: var(--dorado); font-size: 1.65rem; }
+    .duracion span { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; }
+    .formulario {
+      padding: clamp(22px, 4vw, 42px);
+      border: 1px solid var(--borde);
+      border-top: 0;
+      border-radius: 0 0 28px 28px;
+      background: var(--panel);
+      box-shadow: var(--sombra);
+    }
+    .seccion-encabezado { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 18px; }
+    h2 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.6rem); }
+    .etiqueta {
+      padding: 7px 11px;
+      border: 1px solid rgba(244, 196, 78, .34);
+      border-radius: 999px;
+      color: var(--dorado);
+      background: rgba(244, 196, 78, .08);
+      font-size: .78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .datos { display: grid; grid-template-columns: 1.4fr .75fr; gap: 16px; margin-bottom: 40px; }
+    label.campo { display: grid; gap: 8px; color: #e9edf3; font-weight: 700; }
+    input[type="text"] {
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
+      border: 1px solid #334052;
+      border-radius: 13px;
+      outline: none;
+      color: var(--texto);
+      background: #090d14;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    input[type="text"]:focus { border-color: var(--dorado); box-shadow: 0 0 0 4px rgba(244, 196, 78, .11); }
+    .progreso-texto { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; color: var(--muted); font-size: .9rem; }
+    .progreso { height: 9px; margin-bottom: 24px; overflow: hidden; border-radius: 99px; background: #202837; }
+    .progreso > span { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--rojo), var(--dorado)); transition: width .25s ease; }
+    .preguntas { display: grid; gap: 18px; }
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: clamp(18px, 3.4vw, 28px);
+      border: 1px solid #293446;
+      border-radius: var(--radio);
+      background: linear-gradient(145deg, rgba(17, 23, 34, .95), rgba(9, 13, 20, .95));
+    }
+    fieldset:focus-within { border-color: rgba(244, 196, 78, .58); }
+    legend { width: 100%; padding: 0 0 16px; color: #fff; font-size: 1.05rem; font-weight: 800; line-height: 1.55; }
+    .opciones { display: grid; gap: 10px; }
+    .opcion { position: relative; cursor: pointer; }
+    .opcion input { position: absolute; opacity: 0; pointer-events: none; }
+    .opcion span {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 12px;
+      min-height: 54px;
+      padding: 10px 14px;
+      border: 1px solid #303b4d;
+      border-radius: 14px;
+      color: #e2e6ec;
+      background: #0c111a;
+      line-height: 1.45;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .opcion span::before {
+      content: attr(data-letra);
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid #3a4659;
+      border-radius: 10px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+    .opcion:hover span { transform: translateY(-1px); border-color: rgba(244, 196, 78, .55); }
+    .opcion input:focus-visible + span { outline: 3px solid rgba(244, 196, 78, .5); outline-offset: 2px; }
+    .opcion input:checked + span { border-color: var(--dorado); color: #111; background: linear-gradient(135deg, #ffe28a, #d5a43e); font-weight: 750; }
+    .opcion input:checked + span::before { border-color: rgba(0,0,0,.28); color: #111; background: rgba(255,255,255,.25); }
+    .acciones {
+      position: sticky;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 28px;
+      padding: 14px;
+      border: 1px solid var(--borde);
+      border-radius: 17px;
+      background: rgba(7, 10, 16, .92);
+      backdrop-filter: blur(16px);
+    }
+    .acciones p { margin: 0; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+    button {
+      min-height: 48px;
+      padding: 12px 21px;
+      border: 0;
+      border-radius: 13px;
+      color: #111;
+      background: linear-gradient(135deg, #ffe184, var(--dorado-2));
+      box-shadow: 0 10px 30px rgba(244, 196, 78, .18);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease;
+    }
+    button:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    button:disabled { cursor: wait; opacity: .65; transform: none; }
+    .mensaje { display: none; margin-top: 22px; padding: 18px; border: 1px solid; border-radius: 15px; line-height: 1.55; }
+    .mensaje.visible { display: block; }
+    .mensaje.exito { border-color: rgba(64, 213, 141, .48); color: #bcf8da; background: rgba(64, 213, 141, .1); }
+    .mensaje.error { border-color: rgba(255, 135, 144, .48); color: #ffd0d3; background: rgba(199, 43, 52, .12); }
+    .mensaje a { color: inherit; font-weight: 800; }
+    @media (max-width: 700px) {
+      .topbar > span, .duracion { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .datos { grid-template-columns: 1fr; }
+      .seccion-encabezado { align-items: flex-start; flex-direction: column; }
+      .acciones { align-items: stretch; flex-direction: column; }
+      button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="marca">
+      <div class="marca-sello" aria-hidden="true">G</div>
+      <div><strong>GALEAM</strong><small>Capacitación presencial</small></div>
+    </div>
+    <span>Evaluación exclusiva para Walmart Pericentro</span>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="titulo">
+      <div>
+        <p class="eyebrow">Evaluación presencial</p>
+        <h1 id="titulo">Consignas Walmart Pericentro</h1>
+        <p>Lee cada pregunta con atención y selecciona una sola respuesta. Debes contestar los 10 reactivos antes de enviar tu resultado.</p>
+      </div>
+      <div class="duracion" aria-label="Tiempo estimado de evaluación: 15 minutos"><strong>15</strong><span>minutos</span></div>
+    </section>
+    <section class="formulario">
+      <form id="formEvaluacion" novalidate>
+        <div class="seccion-encabezado"><h2>Datos del participante</h2><span class="etiqueta">Servicio: Pericentro</span></div>
+        <div class="datos">
+          <label class="campo" for="nombre">Nombre completo
+            <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="150" placeholder="Escribe tu nombre completo" required>
+          </label>
+          <label class="campo" for="numeroEmpleado">Número de empleado
+            <input id="numeroEmpleado" name="numero_empleado" type="text" inputmode="numeric" autocomplete="off" maxlength="50" placeholder="Ej. 1309" required>
+          </label>
+        </div>
+        <div class="seccion-encabezado"><h2>Cuestionario</h2><span class="etiqueta">Mínimo 80 para aprobar</span></div>
+        <div class="progreso-texto"><span id="textoProgreso">0 de 10 respondidas</span><span id="porcentajeProgreso">0%</span></div>
+        <div class="progreso" aria-hidden="true"><span id="barraProgreso"></span></div>
+        <div id="preguntas" class="preguntas"></div>
+        <div class="acciones"><p>Revisa tus respuestas antes de finalizar. El intento quedará registrado.</p><button id="btnEnviar" type="submit">Enviar evaluación</button></div>
+        <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+  <script>
+    "use strict";
+    const API_URL = "https://capacitacion-production-3120.up.railway.app/api/resultados";
+    const PORTAL_URL = "https://capacitacion-production-3120.up.railway.app/portal";
+    const SERVICIO = "WALMART PERICENTRO";
+    const CURSO = "Consignas específicas — Walmart Pericentro";
+    const CALIFICACION_APROBATORIA = 80;
+    const LETRAS = ["A", "B", "C", "D"];
+    // Clave definitiva confirmada: B,C,B,B,C,B,B,C,B,B.
+    const preguntas = [
+      { texto: "¿Qué debe hacer el guardia en Zona VIPS, Gas y Sam's cuando observa asociados trasladándose hacia las oficinas corporativas?", opciones: ["Ignorarlos y permanecer en su puesto.", "Mantener presencia física activa y reportar de inmediato vía radio.", "Acompañarlos hasta las oficinas.", "Solicitarles su identificación."], correcta: 1 },
+      { texto: "En Zona 9, ¿qué elemento debe utilizar el guardia para detener el tránsito vehicular?", opciones: ["Silbato personal.", "Linterna.", "Banderolas oficiales de seguridad.", "Radio portátil."], correcta: 2 },
+      { texto: "¿Cuál es una consigna obligatoria en Zona Platino respecto a la rampa vehicular?", opciones: ["Permitir el tránsito peatonal cuando no haya vehículos.", "Prohibir que cualquier persona suba o baje caminando por la rampa.", "Permitir únicamente al personal interno.", "Acompañar a los peatones por la rampa."], correcta: 1 },
+      { texto: "¿Qué debe verificar el guardia antes de permitir el acceso al elevador de proveedores?", opciones: ["Que la persona tenga uniforme.", "Que cuente con gafete oficial vigente y autorización formal.", "Que conozca al jefe de servicio.", "Que tenga autorización verbal de otro guardia."], correcta: 1 },
+      { texto: "En Zona Rampa, ¿qué debe hacer el guardia con el personal que intenta ingresar por el punto de entrada de proveedores?", opciones: ["Permitir el acceso sin revisión.", "Solicitar únicamente el nombre.", "Cuestionar, solicitar motivo de visita e inspeccionar.", "Enviarlo directamente a Zona Platino."], correcta: 2 },
+      { texto: "¿Qué condición deben mantener las escaleras de emergencia de Zona Rampa?", opciones: ["Utilizarse para almacenar cajas temporalmente.", "Mantenerse 100% libres de obstáculos.", "Permanecer cerradas durante el turno.", "Utilizarse únicamente por supervisores."], correcta: 1 },
+      { texto: "¿Cada cuánto deben realizarse los rondines de Zona Gas-Diamante durante el turno matutino?", opciones: ["Cada 2 minutos.", "Cada 5 minutos.", "Cada 15 minutos.", "Cada 30 minutos."], correcta: 1 },
+      { texto: "¿Qué distancia táctica debe mantener el guardia durante el acompañamiento de Zona Gas a Zona 9?", opciones: ["1 a 2 metros.", "3 a 5 metros.", "5 a 10 metros.", "15 a 20 metros."], correcta: 2 },
+      { texto: "¿Qué información debe contener el censo nocturno de vehículos en los sótanos -2 y -3?", opciones: ["Únicamente placas y color.", "Marca, modelo, color, placas y cajón asignado.", "Nombre del propietario y teléfono.", "Solamente el número de cajón."], correcta: 1 },
+      { texto: "Durante el turno de tarde, ¿qué debe hacer el guardia de salida de Pericentro?", opciones: ["Abandonar su posición para acompañar al grupo.", "Permanecer firme en su puesto para dar seguridad al cruce y al custodio.", "Realizar rondines dentro de la tienda.", "Retirarse cuando termine el acompañamiento."], correcta: 1 }
+    ];
+    const formulario = document.getElementById("formEvaluacion");
+    const contenedor = document.getElementById("preguntas");
+    const btnEnviar = document.getElementById("btnEnviar");
+    const mensaje = document.getElementById("mensaje");
+    const barra = document.getElementById("barraProgreso");
+    const textoProgreso = document.getElementById("textoProgreso");
+    const porcentajeProgreso = document.getElementById("porcentajeProgreso");
+
+    function crearPregunta(pregunta, indice) {
+      const fieldset = document.createElement("fieldset");
+      const legend = document.createElement("legend");
+      const opciones = document.createElement("div");
+      legend.textContent = `${indice + 1}. ${pregunta.texto}`;
+      opciones.className = "opciones";
+      pregunta.opciones.forEach((texto, opcionIndice) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+        const span = document.createElement("span");
+        label.className = "opcion";
+        input.type = "radio";
+        input.name = `pregunta_${indice}`;
+        input.value = String(opcionIndice);
+        input.required = true;
+        span.dataset.letra = LETRAS[opcionIndice];
+        span.textContent = texto;
+        label.append(input, span);
+        opciones.append(label);
+      });
+      fieldset.append(legend, opciones);
+      return fieldset;
+    }
+
+    preguntas.forEach((pregunta, indice) => contenedor.append(crearPregunta(pregunta, indice)));
+    function respuestasSeleccionadas() { return preguntas.map((_, indice) => formulario.querySelector(`input[name="pregunta_${indice}"]:checked`)); }
+    function actualizarProgreso() {
+      const respondidas = respuestasSeleccionadas().filter(Boolean).length;
+      const porcentaje = Math.round((respondidas / preguntas.length) * 100);
+      textoProgreso.textContent = `${respondidas} de ${preguntas.length} respondidas`;
+      porcentajeProgreso.textContent = `${porcentaje}%`;
+      barra.style.width = `${porcentaje}%`;
+    }
+    function mostrarMensaje(tipo, contenido) {
+      mensaje.className = `mensaje visible ${tipo}`;
+      mensaje.innerHTML = contenido;
+      mensaje.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    formulario.addEventListener("change", actualizarProgreso);
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      mensaje.className = "mensaje";
+      if (!formulario.reportValidity()) return;
+      const seleccionadas = respuestasSeleccionadas();
+      const primeraSinResponder = seleccionadas.findIndex(respuesta => !respuesta);
+      if (primeraSinResponder !== -1) {
+        mostrarMensaje("error", `Falta responder la pregunta ${primeraSinResponder + 1}.`);
+        contenedor.children[primeraSinResponder].scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      let correctas = 0;
+      const incorrectas = [];
+      preguntas.forEach((pregunta, indice) => {
+        const elegida = Number(seleccionadas[indice].value);
+        if (elegida === pregunta.correcta) { correctas += 1; return; }
+        incorrectas.push({
+          numero: indice + 1,
+          pregunta: pregunta.texto,
+          respuesta_usuario: `${LETRAS[elegida]}) ${pregunta.opciones[elegida]}`,
+          respuesta_correcta: `${LETRAS[pregunta.correcta]}) ${pregunta.opciones[pregunta.correcta]}`
+        });
+      });
+      const calificacion = Math.round((correctas / preguntas.length) * 100);
+      const aprobado = calificacion >= CALIFICACION_APROBATORIA;
+      const datos = {
+        nombre: document.getElementById("nombre").value.trim().replace(/\s+/g, " ").toUpperCase(),
+        numero_empleado: document.getElementById("numeroEmpleado").value.trim(),
+        servicio: SERVICIO,
+        curso: CURSO,
+        modalidad: "PRESENCIAL",
+        calificacion,
+        calificacion_maxima: 100,
+        total_preguntas: preguntas.length,
+        respuestas_incorrectas: incorrectas,
+        aprobado
+      };
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = "Guardando resultado…";
+      try {
+        const respuesta = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
+        const resultado = await respuesta.json().catch(() => ({}));
+        if (!respuesta.ok) throw new Error(resultado.mensaje || resultado.error || "No fue posible guardar el resultado.");
+        Array.from(formulario.elements).forEach(control => { control.disabled = true; });
+        mostrarMensaje(aprobado ? "exito" : "error", `<strong>Resultado registrado correctamente.</strong><br>Calificación: ${calificacion} / 100<br>Estado: ${aprobado ? "Aprobado" : "No aprobado"}<br>Intento: ${resultado.intento || "registrado"}<br><br><a href="${PORTAL_URL}">Volver al portal de capacitación</a>`);
+      } catch (error) {
+        mostrarMensaje("error", `<strong>No se pudo guardar el resultado.</strong><br>${String(error.message || error)}<br>Conservamos tus respuestas; revisa tu conexión e intenta nuevamente.`);
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = "Reintentar envío";
+      }
+    });
+    actualizarProgreso();
+  </script>
+</body>
+</html>
