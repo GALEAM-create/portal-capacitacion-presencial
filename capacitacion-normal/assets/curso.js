@@ -156,6 +156,12 @@ const showSection=()=>{
   window.scrollTo({top:0,left:0,behavior:'auto'});
 };
 window.addEventListener('hashchange',showSection);
+
+// Cada nueva entrada o recarga del enlace comienza desde la portada, aunque
+// el navegador haya conservado la última cuartilla en la dirección.
+if(location.hash){
+  history.replaceState(null,'',location.pathname+location.search);
+}
 showSection();
 
 // Navegación táctil en móvil: deslizar a la izquierda avanza y deslizar
