@@ -1,1 +1,270 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evaluación presencial | Walmart Diamante</title><link rel="stylesheet" href="examen.css"></head><body class="exam-only"><main><a href="../../index.html">← Volver al portal presencial</a><p class="eyebrow">Evaluación presencial</p><h1>Consignas Walmart Diamante</h1><section id="net-exam"><p>Responde las 10 preguntas. Dispones de 15 minutos. Calificación mínima: 80%.</p><button type="button" id="begin-exam">Iniciar evaluación</button><p id="exam-clock" role="timer" hidden>15:00</p><form id="net-exam-form" hidden></form><p id="exam-message" role="status" aria-live="polite"></p><section id="exam-result" tabindex="-1" hidden><h2>Resultado de la evaluación</h2><p id="exam-score"></p></section></section></main><script src="examen.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081c2c">
+
+  <title>Capacitación presencial | Galeam</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      position: relative;
+      isolation: isolate;
+      overflow-x: hidden;
+    }
+
+    .video-fondo {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-fondo {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        110deg,
+        rgba(3, 17, 28, 0.86),
+        rgba(8, 28, 44, 0.62),
+        rgba(12, 43, 64, 0.58)
+      );
+    }
+
+    .topbar,
+    .shell {
+      position: relative;
+      z-index: 2;
+    }
+
+    .casco-logo {
+      width: 42px;
+      height: 58px;
+      object-fit: contain;
+      display: block;
+      flex: 0 0 42px;
+      filter: drop-shadow(
+        0 5px 10px rgba(0, 0, 0, 0.35)
+      );
+    }
+  </style>
+</head>
+
+<body>
+
+  <video
+    class="video-fondo"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+  >
+    <source src="fondo.mp4" type="video/mp4">
+  </video>
+
+  <div class="capa-fondo"></div>
+
+  <header class="topbar">
+    <div class="brand">
+
+      <img
+        class="casco-logo"
+        src="casco.png"
+        alt="Casco Hoplon"
+      >
+
+      <div>
+        <b>HOPLON</b>
+        <small>FORMACIÓN PROFESIONAL</small>
+      </div>
+
+    </div>
+
+    <span class="mode">
+      MODALIDAD PRESENCIAL
+    </span>
+  </header>
+
+  <main class="shell">
+
+    <section id="loginView" class="login-grid">
+
+      <div class="intro">
+        <span class="eyebrow">
+          Formación y evaluación
+        </span>
+
+        <h1>Capacitación presencial</h1>
+
+        <p>
+          Ingresa con los mismos datos de la plataforma
+          de capacitación. Aquí encontrarás los cursos
+          disponibles y las evaluaciones finales de la
+          modalidad presencial.
+        </p>
+      </div>
+
+      <form id="loginForm" class="card">
+
+        <h2>Identifica tu registro</h2>
+
+        <p>
+          Escribe tus datos tal como fueron registrados.
+        </p>
+
+        <label for="nombre">
+          Nombre completo
+        </label>
+
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          autocomplete="name"
+          required
+        >
+
+        <label for="numeroEmpleado">
+          Número de empleado
+        </label>
+
+        <input
+          id="numeroEmpleado"
+          name="numero_empleado"
+          type="text"
+          inputmode="numeric"
+          required
+        >
+
+        <button
+          id="loginButton"
+          class="btn btn-primary"
+          type="submit"
+        >
+          Ingresar
+        </button>
+
+        <div
+          id="loginMessage"
+          class="message"
+          role="alert"
+        ></div>
+
+      </form>
+    </section>
+
+    <section
+      id="dashboardView"
+      class="dashboard"
+    >
+
+      <div class="welcome">
+
+        <div>
+          <span class="eyebrow">
+            Contenido disponible
+          </span>
+
+          <h1 id="welcomeName">
+            Bienvenido
+          </h1>
+        </div>
+
+        <div class="profile">
+          <span id="employeeNumber"></span>
+          <br>
+
+          <span id="serviceName"></span>
+          <br>
+
+          <button
+            id="logoutButton"
+            class="logout"
+            type="button"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+      </div>
+
+      <article
+        id="diamanteCourse"
+        class="course"
+        hidden
+      >
+
+        <div>
+          <span class="tag">
+            PRESENCIAL
+          </span>
+
+          <h2>
+            Consignas específicas — Walmart Diamante
+          </h2>
+
+          <p>
+            Evaluación de 10 preguntas. Duración: 15 minutos.
+          </p>
+        </div>
+
+        <a
+          class="btn"
+          href="evaluaciones/walmart-diamante/"
+        >
+          Iniciar evaluación
+        </a>
+
+      </article>
+
+      <article class="course" id="netVetExam" hidden><div><span class="tag">PRESENCIAL</span><h2>Consignas Walmart NET y VET</h2><p>Evaluación de 10 preguntas. Duración: 15 minutos.</p></div><a class="btn" href="evaluaciones/walmart-net-vet/">Iniciar evaluación</a></article>
+
+      <article class="course">
+
+        <div>
+          <span class="tag">
+            PRESENCIAL
+          </span>
+
+          <h2>
+            Manejo de conflictos y comunicación asertiva
+          </h2>
+
+          <p>
+            Evaluación final de 5 preguntas.
+            Necesitas obtener al menos 70 puntos
+            para acreditar.
+          </p>
+        </div>
+
+        <a
+          class="btn"
+          href="evaluacion.html"
+        >
+          Comenzar evaluación
+        </a>
+
+      </article>
+
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="portal.js"></script>
+
+</body>
+</html>
