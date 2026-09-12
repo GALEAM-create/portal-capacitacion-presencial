@@ -137,6 +137,18 @@
       white-space: nowrap;
     }
     .datos { display: grid; grid-template-columns: 1.4fr .75fr; gap: 16px; margin-bottom: 40px; }
+    .participante {
+      display: grid;
+      grid-template-columns: 1.5fr .75fr;
+      gap: 16px;
+      margin-bottom: 40px;
+      padding: 17px 19px;
+      border: 1px solid #293446;
+      border-radius: 15px;
+      background: #090d14;
+    }
+    .participante span { color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+    .participante strong { display: block; margin-top: 5px; color: #fff; }
     label.campo { display: grid; gap: 8px; color: #e9edf3; font-weight: 700; }
     input[type="text"] {
       width: 100%;
@@ -261,14 +273,10 @@
     </section>
     <section class="formulario">
       <form id="formEvaluacion" novalidate>
-        <div class="seccion-encabezado"><h2>Datos del participante</h2><span class="etiqueta">Servicio: Pericentro</span></div>
-        <div class="datos">
-          <label class="campo" for="nombre">Nombre completo
-            <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="150" placeholder="Escribe tu nombre completo" required>
-          </label>
-          <label class="campo" for="numeroEmpleado">Número de empleado
-            <input id="numeroEmpleado" name="numero_empleado" type="text" inputmode="numeric" autocomplete="off" maxlength="50" placeholder="Ej. 1309" required>
-          </label>
+        <div class="seccion-encabezado"><h2>Participante</h2><span class="etiqueta">Servicio: Pericentro</span></div>
+        <div class="participante" id="datosParticipante">
+          <div><span>Nombre</span><strong id="nombreParticipante">Cargando…</strong></div>
+          <div><span>Número de empleado</span><strong id="numeroParticipante">—</strong></div>
         </div>
         <div class="seccion-encabezado"><h2>Cuestionario</h2><span class="etiqueta">Mínimo 80 para aprobar</span></div>
         <div class="progreso-texto"><span id="textoProgreso">0 de 10 respondidas</span><span id="porcentajeProgreso">0%</span></div>
@@ -282,11 +290,16 @@
   <script>
     "use strict";
     const API_URL = "https://capacitacion-production-3120.up.railway.app/api/resultados";
-    const PORTAL_URL = "https://capacitacion-production-3120.up.railway.app/portal";
+    const PORTAL_URL = "https://galeam-create.github.io/portal-capacitacion-presencial/";
     const SERVICIO = "WALMART PERICENTRO";
     const CURSO = "Consignas específicas — Walmart Pericentro";
     const CALIFICACION_APROBATORIA = 80;
     const LETRAS = ["A", "B", "C", "D"];
+    const parametros = new URLSearchParams(window.location.search);
+    const PARTICIPANTE = {
+      nombre: String(parametros.get("nombre") || "").trim().replace(/\s+/g, " ").toUpperCase(),
+      numero_empleado: String(parametros.get("numero_empleado") || "").trim()
+    };
     // Clave definitiva confirmada: B,C,B,B,C,B,B,C,B,B.
     const preguntas = [
       { texto: "¿Qué debe hacer el guardia en Zona VIPS, Gas y Sam's cuando observa asociados trasladándose hacia las oficinas corporativas?", opciones: ["Ignorarlos y permanecer en su puesto.", "Mantener presencia física activa y reportar de inmediato vía radio.", "Acompañarlos hasta las oficinas.", "Solicitarles su identificación."], correcta: 1 },
@@ -333,6 +346,8 @@
     }
 
     preguntas.forEach((pregunta, indice) => contenedor.append(crearPregunta(pregunta, indice)));
+    document.getElementById("nombreParticipante").textContent = PARTICIPANTE.nombre || "Sesión no identificada";
+    document.getElementById("numeroParticipante").textContent = PARTICIPANTE.numero_empleado || "—";
     function respuestasSeleccionadas() { return preguntas.map((_, indice) => formulario.querySelector(`input[name="pregunta_${indice}"]:checked`)); }
     function actualizarProgreso() {
       const respondidas = respuestasSeleccionadas().filter(Boolean).length;
@@ -345,6 +360,10 @@
       mensaje.className = `mensaje visible ${tipo}`;
       mensaje.innerHTML = contenido;
       mensaje.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    if (!PARTICIPANTE.nombre || !PARTICIPANTE.numero_empleado) {
+      btnEnviar.disabled = true;
+      mostrarMensaje("error", "<strong>No se encontró una sesión válida.</strong><br>Regresa al portal, inicia sesión y abre nuevamente esta evaluación.");
     }
     formulario.addEventListener("change", actualizarProgreso);
     formulario.addEventListener("submit", async (evento) => {
@@ -373,8 +392,8 @@
       const calificacion = Math.round((correctas / preguntas.length) * 100);
       const aprobado = calificacion >= CALIFICACION_APROBATORIA;
       const datos = {
-        nombre: document.getElementById("nombre").value.trim().replace(/\s+/g, " ").toUpperCase(),
-        numero_empleado: document.getElementById("numeroEmpleado").value.trim(),
+        nombre: PARTICIPANTE.nombre,
+        numero_empleado: PARTICIPANTE.numero_empleado,
         servicio: SERVICIO,
         curso: CURSO,
         modalidad: "PRESENCIAL",
