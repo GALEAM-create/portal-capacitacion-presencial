@@ -54,7 +54,7 @@
   }
   async function saveResult(score){
     const user=portalUser();
-    const payload={curso:COURSE_NAME,calificacion:score,puntaje:score,aprobado:score>=PASSING_SCORE,nombre:user.nombre,numero_empleado:user.numero_empleado,servicio:user.servicio||'WALMART CENTRAL DE DOCUMENTOS',fecha:new Date().toISOString()};
+    const payload={curso:COURSE_NAME,calificacion:score,puntaje:score,aprobado:score>=PASSING_SCORE,nombre:user.nombre,numero_empleado:user.numero_empleado,servicio:user.servicio||'WALMART CENTRAL DOCS',fecha:new Date().toISOString()};
     try{
       const response=await fetch(`${API_BASE}/api/resultados`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(payload)});
       if(!response.ok)throw new Error(`HTTP ${response.status}`);
