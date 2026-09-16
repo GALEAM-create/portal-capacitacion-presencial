@@ -2,7 +2,7 @@
   'use strict';
   const COURSE_NAME='Consignas específicas — Walmart Central de Documentos';
   const PASSING_SCORE=80;
-  const API_BASE=String(window.PORTAL_CONFIG?.apiBase||localStorage.getItem('apiBase')||'').replace(/\/$/,'');
+  const API_BASE=String(window.PORTAL_CONFIG?.apiBase||localStorage.getItem('apiBase')||'https://capacitacion-production-3120.up.railway.app').replace(/\/$/,'');
   const screens=[...document.querySelectorAll('.screen')];
   const progressBar=document.querySelector('#progressBar');
   const pageLabel=document.querySelector('#pageLabel');
@@ -53,15 +53,19 @@
     return {nombre:get('nombre','nombreCompleto','empleadoNombre','userName'),numero_empleado:get('numero_empleado','numeroEmpleado','empleado','employeeNumber'),servicio:get('servicio','service','empleadoServicio')};
   }
   async function saveResult(score){
-    const user=portalUser();
-    const payload={curso:COURSE_NAME,calificacion:score,puntaje:score,aprobado:score>=PASSING_SCORE,nombre:user.nombre,numero_empleado:user.numero_empleado,servicio:user.servicio||'WALMART CENTRAL DOCS',fecha:new Date().toISOString()};
+    const payload={calificacion:score};
     try{
-      const response=await fetch(`${API_BASE}/api/resultados`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(payload)});
-      if(!response.ok)throw new Error(`HTTP ${response.status}`);
-      localStorage.setItem('ultimoResultadoCentralDocumentos',JSON.stringify(payload));
+      const response=await fetch(`${API_BASE}/api/portal/central-docs/resultados`,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(payload)});
+      if(!response.ok){
+        const data=await response.json().catch(()=>({}));
+        throw new Error(data.mensaje||`HTTP ${response.status}`);
+      }
+      localStorage.setItem('ultimoResultadoCentralDocumentos',JSON.stringify({curso:COURSE_NAME,calificacion:score,fecha:new Date().toISOString()}));
+      return true;
     }catch(error){
       console.error('No fue posible guardar el resultado:',error);
-      localStorage.setItem('resultadoPendienteCentralDocumentos',JSON.stringify(payload));
+      localStorage.setItem('resultadoPendienteCentralDocumentos',JSON.stringify({curso:COURSE_NAME,calificacion:score,fecha:new Date().toISOString()}));
+      return false;
     }
   }
   document.querySelector('#gradeButton').addEventListener('click',async()=>{
