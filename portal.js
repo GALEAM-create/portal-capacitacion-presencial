@@ -26,6 +26,12 @@ const pericentroCourse =
 const pericentroLink =
   document.querySelector("#pericentroLink");
 
+const felixCuevasCourse =
+  document.querySelector("#felixCuevasCourse");
+
+const felixCuevasLink =
+  document.querySelector("#felixCuevasLink");
+
 const conflictosCourse =
   document.querySelector("#conflictosCourse");
 
@@ -50,6 +56,11 @@ function isPericentroService(value) {
     "WALMART PERICENTRO",
     "PERICENTRO"
   ].includes(normalizeService(value));
+}
+
+function isFelixCuevasService(value) {
+  return normalizeService(value) ===
+    "WALMART FELIX CUEVAS";
 }
 
 function participantExamUrl(path, participant) {
@@ -84,6 +95,9 @@ function showParticipant(participant) {
   const esPericentro =
     isPericentroService(servicio);
 
+  const esFelixCuevas =
+    isFelixCuevasService(servicio);
+
   const netVetExam =
     document.querySelector("#netVetExam");
 
@@ -110,9 +124,14 @@ function showParticipant(participant) {
       !esPericentro;
   }
 
+  if (felixCuevasCourse) {
+    felixCuevasCourse.hidden =
+      !esFelixCuevas;
+  }
+
   if (conflictosCourse) {
     conflictosCourse.hidden =
-      esPericentro;
+      esPericentro || esFelixCuevas;
   }
 
   if (
@@ -122,6 +141,17 @@ function showParticipant(participant) {
     pericentroLink.href =
       participantExamUrl(
         "evaluaciones/walmart-pericentro/",
+        participant
+      );
+  }
+
+  if (
+    felixCuevasLink &&
+    esFelixCuevas
+  ) {
+    felixCuevasLink.href =
+      participantExamUrl(
+        "evaluaciones/walmart-felix-cuevas/",
         participant
       );
   }
