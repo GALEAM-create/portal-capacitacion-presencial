@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Evaluación presencial de consignas para Walmart Félix Cuevas">
+  <title>Evaluación presencial | Walmart Félix Cuevas</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; background:#05070b; color:#f7f8fa; --gold:#f4c44e; --line:rgba(244,196,78,.23); }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; background:radial-gradient(circle at 12% 0%,rgba(244,196,78,.16),transparent 30rem),radial-gradient(circle at 88% 8%,rgba(199,43,52,.15),transparent 28rem),linear-gradient(145deg,#030407,#0a0e15 52%,#05070b); }
+    .topbar { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; gap:16px; align-items:center; min-height:72px; padding:12px clamp(18px,4vw,46px); border-bottom:1px solid var(--line); background:rgba(5,7,11,.9); backdrop-filter:blur(18px); }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .seal { display:grid; place-items:center; width:42px; height:42px; border-radius:13px; color:#111; background:linear-gradient(145deg,#ffe08a,#bd8d2e); font-weight:900; }
+    .brand strong { display:block; letter-spacing:.08em; } .brand small,.topbar>span { color:#aeb7c5; font-size:.8rem; }
+    main { width:min(100% - 28px,920px); margin:clamp(24px,5vw,52px) auto 72px; }
+    .hero,.form-box { border:1px solid var(--line); background:rgba(13,17,24,.94); box-shadow:0 24px 70px rgba(0,0,0,.48); }
+    .hero { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; padding:clamp(24px,5vw,48px); border-radius:28px 28px 0 0; background:linear-gradient(130deg,rgba(244,196,78,.12),rgba(199,43,52,.08) 52%,rgba(13,17,24,.94)); }
+    .eyebrow { margin:0 0 12px; color:var(--gold); font-size:.78rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(2rem,5.8vw,4rem); line-height:1.03; } .hero p:last-child { color:#d4dae3; line-height:1.65; }
+    .duration { min-width:125px; padding:16px; border:1px solid var(--line); border-radius:18px; text-align:center; background:rgba(0,0,0,.24); }
+    .duration strong { display:block; color:var(--gold); font-size:1.65rem; } .duration span { color:#aeb7c5; font-size:.78rem; text-transform:uppercase; }
+    .form-box { padding:clamp(22px,4vw,42px); border-top:0; border-radius:0 0 28px 28px; }
+    .participant { display:grid; grid-template-columns:1.5fr .75fr; gap:16px; margin-bottom:34px; padding:17px 19px; border:1px solid #293446; border-radius:15px; background:#090d14; }
+    .participant span { color:#aeb7c5; font-size:.78rem; text-transform:uppercase; } .participant strong { display:block; margin-top:5px; }
+    .progress-text { display:flex; justify-content:space-between; margin:0 0 9px; color:#aeb7c5; } .progress { height:9px; margin-bottom:24px; overflow:hidden; border-radius:99px; background:#202837; } .progress span { display:block; width:0; height:100%; background:linear-gradient(90deg,#c72b34,var(--gold)); transition:width .25s; }
+    #questions { display:grid; gap:18px; } fieldset { margin:0; padding:clamp(18px,3.4vw,28px); border:1px solid #293446; border-radius:20px; background:linear-gradient(145deg,rgba(17,23,34,.95),rgba(9,13,20,.95)); }
+    legend { width:100%; padding:0 0 16px; font-weight:800; line-height:1.55; } .options { display:grid; gap:10px; }
+    label { position:relative; cursor:pointer; } label input { position:absolute; opacity:0; } label span { display:grid; grid-template-columns:34px 1fr; align-items:center; gap:12px; min-height:54px; padding:10px 14px; border:1px solid #303b4d; border-radius:14px; background:#0c111a; line-height:1.45; }
+    label span::before { content:attr(data-letter); display:grid; place-items:center; width:32px; height:32px; border:1px solid #3a4659; border-radius:10px; color:#aeb7c5; font-weight:900; } label input:checked+span { border-color:var(--gold); color:#111; background:linear-gradient(135deg,#ffe28a,#d5a43e); font-weight:750; }
+    .actions { position:sticky; bottom:14px; display:flex; justify-content:space-between; gap:16px; align-items:center; margin-top:28px; padding:14px; border:1px solid var(--line); border-radius:17px; background:rgba(7,10,16,.94); } .actions p { margin:0; color:#aeb7c5; }
+    button { min-height:48px; padding:12px 21px; border:0; border-radius:13px; color:#111; background:linear-gradient(135deg,#ffe184,#bd8d2e); font-weight:900; cursor:pointer; } button:disabled { opacity:.65; cursor:wait; }
+    .message { display:none; margin-top:22px; padding:18px; border:1px solid; border-radius:15px; line-height:1.55; } .message.visible { display:block; } .message.success { color:#bcf8da; background:rgba(64,213,141,.1); } .message.error { color:#ffd0d3; background:rgba(199,43,52,.12); } .message a { color:inherit; font-weight:800; }
+    @media(max-width:700px){.topbar>span,.duration{display:none}.hero{grid-template-columns:1fr}.participant{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}.actions button{width:100%}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><div class="seal">H</div><div><strong>HOPLON</strong><small>FORMACIÓN PROFESIONAL</small></div></div><span>Exclusiva para WALMART FELIX CUEVAS</span></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">Evaluación presencial</p><h1>Consignas Walmart Félix Cuevas</h1><p>Lee cada pregunta y selecciona una respuesta. Debes contestar los 10 reactivos antes de enviar el resultado.</p></div><div class="duration"><strong>15</strong><span>minutos</span></div></section>
+    <section class="form-box"><form id="exam" novalidate>
+      <div class="participant"><div><span>Nombre</span><strong id="participantName">Cargando…</strong></div><div><span>Número de empleado</span><strong id="participantNumber">—</strong></div></div>
+      <div class="progress-text"><span id="progressText">0 de 10 respondidas</span><span id="progressPercent">0%</span></div><div class="progress"><span id="progressBar"></span></div>
+      <div id="questions"></div>
+      <div class="actions"><p>Revisa tus respuestas. El intento quedará registrado.</p><button id="submitButton" type="submit">Enviar evaluación</button></div>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form></section>
+  </main>
+  <script>
+    "use strict";
+    const API_URL="https://capacitacion-production-3120.up.railway.app/api/resultados";
+    const PORTAL_URL="https://galeam-create.github.io/portal-capacitacion-presencial/";
+    const SERVICE="WALMART FELIX CUEVAS";
+    const COURSE="Consignas específicas — Walmart Félix Cuevas";
+    const PASSING_SCORE=80;
+    const LETTERS=["A","B","C"];
+    const params=new URLSearchParams(location.search);
+    const participant={name:String(params.get("nombre")||"").trim().replace(/\s+/g," ").toUpperCase(),number:String(params.get("numero_empleado")||"").trim(),service:String(params.get("servicio")||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().replace(/\s+/g," ").toUpperCase()};
+    const questions=[
+      {text:"¿Qué se revisa en los rondines?",options:["Se verifican los accesos a Seguridad Corporativa, UPS y Centro de Cómputo, y que los torniquetes permanezcan sellados.","Se comprueba que el compañero haga bien su trabajo.","Se revisa que los vecinos no estén haciendo fiesta."],correct:0},
+      {text:"¿Quién es responsable del monitoreo NET en Toreo las 24 horas, los 7 días de la semana y en días festivos?",options:["El elemento de monitoreo Alto México.","El elemento de seguridad.","Los elementos a cargo de las cámaras del C5."],correct:0},
+      {text:"¿Cuál es uno de los requisitos para el ingreso de proveedores?",options:["Pedir autorización a la autoridad competente.","Dar una clave establecida por el guardia.","Presentar comprobante oficial vigente de alta médica del IMSS o ISSSTE."],correct:2},
+      {text:"Con base en las consignas generales de Walmart, ¿con cuánto tiempo de anticipación debes llegar para realizar el cambio de turno?",options:["10 minutos antes.","15 minutos después.","20 minutos después."],correct:0},
+      {text:"¿Cuál es nuestra prioridad máxima?",options:["Ser amigo de los proveedores.","Preservar la integridad física y la vida de quienes laboran o visitan las instalaciones corporativas.","No caer en fraudes con la empresa."],correct:1},
+      {text:"¿En qué área deben realizarse las revisiones físicas de los elementos salientes?",options:["En puntos ciegos.","Dentro de la caseta.","Frente a la cámara de CCTV del acceso principal, para que quede constancia en video."],correct:2},
+      {text:"¿Qué debes hacer cuando llegue un usuario?",options:["Invitarlo a comer.","Dirigirte con respeto y cordialidad: saluda y sonríe.","Ofrecerle servicios como agua o baño."],correct:1},
+      {text:"¿Qué implica el control de bienes e intereses?",options:["Inteligencia financiera.","El empeño que ponemos en el trabajo.","Cuidar rigurosamente los activos tangibles e intangibles de Walmart de México y Centroamérica."],correct:2},
+      {text:"¿Cómo se considera que un asociado intente ingresar con la tarjeta de otra persona?",options:["Como un error; se le asesora.","Como una forma válida de ingresar.","Como intento de suplantación; debe reportarse."],correct:2},
+      {text:"¿A quién debes informar sobre una anomalía o conducta irregular, incluso si involucra a un compañero?",options:["Al líder de Seguridad Corporativa.","Al compañero entrante.","A tu familia, para que sepa qué hacer."],correct:0}
+    ];
+    const form=document.querySelector("#exam"),container=document.querySelector("#questions"),button=document.querySelector("#submitButton"),message=document.querySelector("#message");
+    questions.forEach((q,i)=>{const fieldset=document.createElement("fieldset");fieldset.innerHTML=`<legend>${i+1}. ${q.text}</legend><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}" required><span data-letter="${LETTERS[j]}">${o}</span></label>`).join("")}</div>`;container.append(fieldset)});
+    document.querySelector("#participantName").textContent=participant.name||"Sesión no identificada";document.querySelector("#participantNumber").textContent=participant.number||"—";
+    function selections(){return questions.map((_,i)=>form.querySelector(`input[name="q${i}"]:checked`))}
+    function show(type,html){message.className=`message visible ${type}`;message.innerHTML=html;message.scrollIntoView({behavior:"smooth",block:"center"})}
+    function progress(){const count=selections().filter(Boolean).length,percent=Math.round(count/questions.length*100);document.querySelector("#progressText").textContent=`${count} de ${questions.length} respondidas`;document.querySelector("#progressPercent").textContent=`${percent}%`;document.querySelector("#progressBar").style.width=`${percent}%`}
+    if(!participant.name||!participant.number||participant.service!==SERVICE){button.disabled=true;show("error","<strong>No se encontró una sesión válida para WALMART FELIX CUEVAS.</strong><br>Regresa al portal e inicia sesión nuevamente.")}
+    form.addEventListener("change",progress);
+    form.addEventListener("submit",async event=>{event.preventDefault();if(!form.reportValidity())return;const selected=selections();if(selected.some(x=>!x))return;let correct=0;const incorrect=[];questions.forEach((q,i)=>{const chosen=Number(selected[i].value);if(chosen===q.correct){correct++;return}incorrect.push({numero:i+1,pregunta:q.text,respuesta_usuario:`${LETTERS[chosen]}) ${q.options[chosen]}`,respuesta_correcta:`${LETTERS[q.correct]}) ${q.options[q.correct]}`})});const score=Math.round(correct/questions.length*100),passed=score>=PASSING_SCORE;const data={nombre:participant.name,numero_empleado:participant.number,servicio:SERVICE,curso:COURSE,modalidad:"PRESENCIAL",calificacion:score,calificacion_maxima:100,total_preguntas:questions.length,respuestas_incorrectas:incorrect,aprobado:passed};button.disabled=true;button.textContent="Guardando resultado…";try{const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.mensaje||result.error||"No fue posible guardar el resultado.");Array.from(form.elements).forEach(control=>control.disabled=true);show(passed?"success":"error",`<strong>Resultado registrado correctamente.</strong><br>Calificación: ${score} / 100<br>Estado: ${passed?"Aprobado":"No aprobado"}<br>Intento: ${result.intento||"registrado"}<br><br><a href="${PORTAL_URL}">Volver al portal</a>`)}catch(error){show("error",`<strong>No se pudo guardar el resultado.</strong><br>${String(error.message||error)}`);button.disabled=false;button.textContent="Reintentar envío"}});
+    progress();
+  </script>
+</body>
+</html>
