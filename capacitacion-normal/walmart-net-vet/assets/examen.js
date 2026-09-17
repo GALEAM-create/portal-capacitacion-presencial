@@ -3,7 +3,7 @@ const NET_QUESTIONS=[{"q": "¿En qué consiste un código rojo?", "options": ["I
 window.netExamFinished=false;
 let netExamGraded=false,netParticipant=null,netPayload=null,netSaving=false;
 const NET_API="https://capacitacion-production-3120.up.railway.app";
-const NET_MODALIDAD="PRESENCIAL";
+const NET_MODALIDAD="E-LEARNING";
 const retrySave=document.createElement("button");retrySave.type="button";retrySave.textContent="Reintentar guardado";retrySave.hidden=true;
 document.querySelector("#net-exam").append(retrySave);
 retrySave.addEventListener("click",()=>saveNetResult());
