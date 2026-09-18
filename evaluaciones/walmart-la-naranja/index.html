@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Evaluación presencial de consignas específicas para Walmart La Naranja">
+  <title>Evaluación presencial | Walmart La Naranja</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#05070b;
+      --panel:#0d1118;
+      --panel2:#090d14;
+      --text:#f7f8fa;
+      --muted:#aeb7c5;
+      --gold:#f4c44e;
+      --gold2:#bd8d2e;
+      --red:#c72b34;
+      --green:#40d58d;
+      --line:rgba(244,196,78,.23);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 12% 0%,rgba(244,196,78,.15),transparent 30rem),
+        radial-gradient(circle at 88% 7%,rgba(199,43,52,.14),transparent 28rem),
+        linear-gradient(145deg,#030407,#0a0e15 52%,#05070b);
+    }
+    button,input{font:inherit}
+    .topbar{
+      position:sticky;top:0;z-index:10;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      min-height:72px;padding:12px clamp(18px,4vw,46px);
+      border-bottom:1px solid var(--line);
+      background:rgba(5,7,11,.9);backdrop-filter:blur(18px);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .seal{
+      display:grid;place-items:center;width:42px;height:42px;border-radius:13px;
+      color:#111;background:linear-gradient(145deg,#ffe08a,#bd8d2e);font-weight:900;
+    }
+    .brand strong{display:block;letter-spacing:.08em}
+    .brand small,.topbar>span{color:var(--muted);font-size:.8rem}
+    main{width:min(100% - 28px,920px);margin:clamp(24px,5vw,52px) auto 72px}
+    .hero,.form-box{
+      border:1px solid var(--line);
+      background:rgba(13,17,24,.94);
+      box-shadow:0 24px 70px rgba(0,0,0,.48);
+    }
+    .hero{
+      display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;
+      padding:clamp(24px,5vw,48px);border-radius:28px 28px 0 0;
+      background:linear-gradient(130deg,rgba(244,196,78,.12),rgba(199,43,52,.08) 52%,rgba(13,17,24,.94));
+    }
+    .eyebrow{margin:0 0 12px;color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(2rem,5.8vw,4rem);line-height:1.03}
+    .hero p:last-child{color:#d4dae3;line-height:1.65}
+    .duration{min-width:125px;padding:16px;border:1px solid var(--line);border-radius:18px;text-align:center;background:rgba(0,0,0,.24)}
+    .duration strong{display:block;color:var(--gold);font-size:1.65rem}
+    .duration span{color:var(--muted);font-size:.78rem;text-transform:uppercase}
+    .form-box{padding:clamp(22px,4vw,42px);border-top:0;border-radius:0 0 28px 28px}
+    .participant{
+      display:grid;grid-template-columns:1.5fr .75fr;gap:16px;margin-bottom:30px;
+      padding:17px 19px;border:1px solid #293446;border-radius:15px;background:var(--panel2)
+    }
+    .participant span{color:var(--muted);font-size:.78rem;text-transform:uppercase}
+    .participant strong{display:block;margin-top:5px}
+    .progress-text{display:flex;justify-content:space-between;margin:0 0 9px;color:var(--muted)}
+    .progress{height:9px;margin-bottom:24px;overflow:hidden;border-radius:99px;background:#202837}
+    .progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .25s}
+    #questions{display:grid;gap:18px}
+    fieldset{
+      margin:0;padding:clamp(18px,3.4vw,28px);border:1px solid #293446;border-radius:20px;
+      background:linear-gradient(145deg,rgba(17,23,34,.95),rgba(9,13,20,.95))
+    }
+    legend{width:100%;padding:0 0 16px;font-weight:800;line-height:1.55}
+    .options{display:grid;gap:10px}
+    label{position:relative;cursor:pointer}
+    label input{position:absolute;opacity:0}
+    label span{
+      display:grid;grid-template-columns:34px 1fr;align-items:center;gap:12px;
+      min-height:54px;padding:10px 14px;border:1px solid #303b4d;border-radius:14px;
+      background:#0c111a;line-height:1.45
+    }
+    label span::before{
+      content:attr(data-letter);display:grid;place-items:center;width:32px;height:32px;
+      border:1px solid #3a4659;border-radius:10px;color:var(--muted);font-weight:900
+    }
+    label input:checked+span{
+      border-color:var(--gold);color:#111;background:linear-gradient(135deg,#ffe28a,#d5a43e);font-weight:750
+    }
+    .actions{
+      position:sticky;bottom:14px;display:flex;justify-content:space-between;gap:16px;align-items:center;
+      margin-top:28px;padding:14px;border:1px solid var(--line);border-radius:17px;background:rgba(7,10,16,.94)
+    }
+    .actions p{margin:0;color:var(--muted)}
+    button,.back{
+      min-height:48px;padding:12px 21px;border:0;border-radius:13px;color:#111;
+      background:linear-gradient(135deg,#ffe184,#bd8d2e);font-weight:900;cursor:pointer;text-decoration:none
+    }
+    button:disabled{opacity:.65;cursor:wait}
+    .message{display:none;margin-top:22px;padding:18px;border:1px solid;border-radius:15px;line-height:1.55}
+    .message.visible{display:block}
+    .message.success{color:#bcf8da;background:rgba(64,213,141,.1);border-color:rgba(64,213,141,.45)}
+    .message.error{color:#ffd0d3;background:rgba(199,43,52,.12);border-color:rgba(255,135,144,.45)}
+    .small{color:var(--muted);font-size:.9rem}
+    @media(max-width:700px){
+      .topbar>span,.duration{display:none}
+      .hero{grid-template-columns:1fr}
+      .participant{grid-template-columns:1fr}
+      .actions{align-items:stretch;flex-direction:column}
+      .actions button{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="seal">H</div><div><strong>HOPLON</strong><small>FORMACIÓN PROFESIONAL</small></div></div>
+    <span>Exclusiva para WALMART LA NARANJA</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Evaluación presencial</p>
+        <h1>Consignas Walmart La Naranja</h1>
+        <p>Contesta los 10 reactivos. El servidor calculará la calificación y guardará el intento como modalidad PRESENCIAL.</p>
+      </div>
+      <div class="duration"><strong>15</strong><span>minutos</span></div>
+    </section>
+
+    <section class="form-box">
+      <form id="exam" novalidate>
+        <div class="participant">
+          <div><span>Nombre</span><strong id="participantName">Validando sesión…</strong></div>
+          <div><span>Número de empleado</span><strong id="participantNumber">—</strong></div>
+        </div>
+
+        <div class="progress-text"><span id="progressText">0 de 10 respondidas</span><span id="progressPercent">0%</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+
+        <div id="questions"></div>
+
+        <div class="actions">
+          <p>Revisa tus respuestas antes de enviar. Cada intento se registra por separado.</p>
+          <button id="submitButton" type="submit" disabled>Enviar evaluación</button>
+        </div>
+
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const API="https://capacitacion-production-3120.up.railway.app";
+    const PORTAL="../../index.html";
+    const LETTERS=["A","B","C","D"];
+    const PASSING_SCORE=80;
+    const ATTEMPT_KEY="la_naranja_presencial_envio";
+    const ANSWERS_KEY="la_naranja_presencial_respuestas";
+
+    const questions=[
+      {text:"¿Con cuánto tiempo de anticipación debe presentarse el guardia antes de iniciar su turno?",options:["5 minutos","10 minutos","15 minutos","20 minutos"],correct:1},
+      {text:"¿Qué debe realizarse durante la recepción y entrega del servicio?",options:["Únicamente revisar el uniforme","Chequear novedades, bitácoras y equipo","Revisar solamente las llaves","Esperar instrucciones del siguiente turno"],correct:1},
+      {text:"De lunes a viernes, ¿a qué hora se debe desalarmar la unidad?",options:["05:30 hrs.","06:00 hrs.","06:30 hrs.","07:00 hrs."],correct:1},
+      {text:"¿Qué se debe hacer si CAE o Zona Cero no responden en un lapso de 10 minutos al alarmar o desalarmar?",options:["Retirarse del puesto","Reiniciar el panel","Asentar la incidencia en el libro de novedades","Esperar hasta el siguiente turno"],correct:2},
+      {text:"En caso de activación de una alarma de intrusión en el panel Bosch, ¿cuál es una de las primeras acciones?",options:["Desconectar el panel","Ubicar el número de dispositivo o zona activada","Abandonar inmediatamente la unidad","Apagar todas las cámaras"],correct:1},
+      {text:"¿Qué aplicación debe utilizarse para tomar evidencia fotográfica de incidencias, paneles y recorridos?",options:["WhatsApp","Google Fotos","Timestamp Camera Free","Cámara del celular sin aplicación"],correct:2},
+      {text:"¿Qué gafete corresponde a un proveedor?",options:["Gafete rojo","Gafete azul","Gafete verde","Gafete amarillo"],correct:2},
+      {text:"¿Qué debe hacer el guardia al registrar una unidad de carga o descarga?",options:["Registrar únicamente el nombre del proveedor","Registrar unidad, placas y chofer","Retener las llaves del vehículo","Revisar la mercancía de montaje"],correct:1},
+      {text:"¿Qué debe hacer el guardia ante la detección de una persona tomando fotografías del montaje (Protocolo X1)?",options:["Ignorar la situación","Tomar evidencia, solicitar el borrado de imágenes y trasladar al infractor al área de espera","Permitir las fotografías si son pocas","Retirar personalmente el teléfono del infractor"],correct:1},
+      {text:"¿Qué debe verificarse durante los rondines en las rutas de emergencia?",options:["Que los extintores, hidrantes y salidas estén libres de obstáculos","Que todas las puertas permanezcan abiertas","Que los proveedores estén fuera de la unidad","Que las cámaras estén apagadas"],correct:0}
+    ];
+
+    const form=document.querySelector("#exam");
+    const container=document.querySelector("#questions");
+    const button=document.querySelector("#submitButton");
+    const message=document.querySelector("#message");
+    let participant=null;
+    let saving=false;
+
+    function normalize(value){
+      return String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().replace(/\s+/g," ").toUpperCase();
+    }
+
+    function serviceAllowed(value){
+      return ["WALMART LA NARANJA","LA NARANJA","WALMART NARANJA","WALMART"].includes(normalize(value));
+    }
+
+    function uuid(){
+      if(window.crypto?.randomUUID)return window.crypto.randomUUID();
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{
+        const r=Math.floor(Math.random()*16);
+        return (c==="x"?r:(r&3)|8).toString(16);
+      });
+    }
+
+    function selections(){
+      return questions.map((_,i)=>form.querySelector(`input[name="q${i}"]:checked`));
+    }
+
+    function answers(){
+      return selections().map(input=>input?Number(input.value):null);
+    }
+
+    function attemptId(currentAnswers){
+      const serialized=JSON.stringify(currentAnswers);
+      let id=sessionStorage.getItem(ATTEMPT_KEY);
+      const savedAnswers=sessionStorage.getItem(ANSWERS_KEY);
+      if(!id||savedAnswers!==serialized){
+        id=uuid();
+        sessionStorage.setItem(ATTEMPT_KEY,id);
+        sessionStorage.setItem(ANSWERS_KEY,serialized);
+      }
+      return id;
+    }
+
+    function clearAttempt(){
+      sessionStorage.removeItem(ATTEMPT_KEY);
+      sessionStorage.removeItem(ANSWERS_KEY);
+    }
+
+    function show(type,html){
+      message.className=`message visible ${type}`;
+      message.innerHTML=html;
+      message.scrollIntoView({behavior:"smooth",block:"center"});
+    }
+
+    function progress(){
+      const count=selections().filter(Boolean).length;
+      const percent=Math.round(count/questions.length*100);
+      document.querySelector("#progressText").textContent=`${count} de ${questions.length} respondidas`;
+      document.querySelector("#progressPercent").textContent=`${percent}%`;
+      document.querySelector("#progressBar").style.width=`${percent}%`;
+    }
+
+    questions.forEach((q,i)=>{
+      const fieldset=document.createElement("fieldset");
+      fieldset.innerHTML=`<legend>${i+1}. ${q.text}</legend><div class="options">${q.options.map((option,j)=>`<label><input type="radio" name="q${i}" value="${j}" required><span data-letter="${LETTERS[j]}">${option}</span></label>`).join("")}</div>`;
+      container.append(fieldset);
+    });
+
+    async function loadParticipant(){
+      try{
+        const response=await fetch(API+"/api/portal/session",{credentials:"include",cache:"no-store"});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok||!data.autenticado||!data.participante){
+          throw new Error("Tu sesión no está activa. Regresa al portal presencial e inicia sesión nuevamente.");
+        }
+        if(!serviceAllowed(data.participante.servicio)){
+          throw new Error("Esta evaluación está disponible únicamente para Walmart La Naranja.");
+        }
+        participant=data.participante;
+        document.querySelector("#participantName").textContent=participant.nombre;
+        document.querySelector("#participantNumber").textContent=participant.numero_empleado;
+        button.disabled=false;
+      }catch(error){
+        document.querySelector("#participantName").textContent="Sesión no válida";
+        show("error",`<strong>No se puede iniciar la evaluación.</strong><br>${error.message}<br><br><a class="back" href="${PORTAL}">Volver al portal</a>`);
+      }
+    }
+
+    form.addEventListener("change",progress);
+
+    form.addEventListener("submit",async event=>{
+      event.preventDefault();
+      if(saving||!participant)return;
+      if(!form.reportValidity())return;
+
+      const currentAnswers=answers();
+      if(currentAnswers.includes(null)){
+        show("error","Responde las 10 preguntas antes de enviar.");
+        return;
+      }
+
+      saving=true;
+      button.disabled=true;
+      button.textContent="Guardando resultado…";
+
+      try{
+        const response=await fetch(API+"/api/portal/la-naranja-presencial/resultados",{
+          method:"POST",
+          credentials:"include",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            envio_id:attemptId(currentAnswers),
+            respuestas:currentAnswers,
+            numero_empleado_sesion:participant.numero_empleado
+          })
+        });
+
+        const result=await response.json().catch(()=>({}));
+
+        if(!response.ok){
+          throw new Error(result.mensaje||"No fue posible guardar el resultado.");
+        }
+
+        if(
+          !result.id||
+          !Number.isFinite(Number(result.calificacion))||
+          !Number.isFinite(Number(result.intento))||
+          result.modalidad!=="PRESENCIAL"
+        ){
+          throw new Error("El servidor no confirmó completamente el registro presencial.");
+        }
+
+        clearAttempt();
+        Array.from(form.elements).forEach(control=>control.disabled=true);
+
+        const score=Number(result.calificacion);
+        const passed=Boolean(result.aprobado);
+
+        show(
+          passed?"success":"error",
+          `<strong>Resultado registrado correctamente.</strong><br>
+           Calificación: ${score} / 100<br>
+           Estado: ${passed?"Aprobado":"No aprobado"}<br>
+           Modalidad: PRESENCIAL<br>
+           Intento: ${result.intento}<br>
+           <span class="small">La calificación fue calculada y confirmada por el servidor.</span><br><br>
+           <a class="back" href="${PORTAL}">Volver al portal</a>`
+        );
+      }catch(error){
+        show("error",`<strong>No se pudo confirmar el guardado.</strong><br>${String(error.message||error)}<br><span class="small">Tus respuestas conservan el mismo identificador para evitar un intento duplicado al reintentar.</span>`);
+        button.disabled=false;
+        button.textContent="Reintentar envío";
+      }finally{
+        saving=false;
+      }
+    });
+
+    progress();
+    loadParticipant();
+  </script>
+</body>
+</html>
