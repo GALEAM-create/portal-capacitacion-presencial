@@ -1,3 +1,89 @@
+const API_URL = "https://capacitacion-production-3120.up.railway.app";
+const MODALIDAD = "E-LEARNING";
+const tokenParams = new URLSearchParams(location.hash.slice(1));
+const accessToken = String(tokenParams.get("token") || "").trim();
+if (accessToken) {
+  history.replaceState(null, "", location.pathname + "#portada");
+}
+let participant = null;
+let savingResult = false;
+
+function normalizeService(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toUpperCase();
+}
+
+function allowedService(value) {
+  return [
+    "WALMART LA NARANJA",
+    "LA NARANJA",
+    "WALMART NARANJA"
+  ].includes(normalizeService(value));
+}
+
+async function getParticipant() {
+  if (participant) return participant;
+
+  const response = await fetch(API_URL + "/api/portal/session", {
+    credentials: "include",
+    cache: "no-store",
+    headers: accessToken
+      ? { Authorization: "Bearer " + accessToken }
+      : {}
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || !data.autenticado || !data.participante) {
+    throw new Error("Tu acceso no está activo. Vuelve al portal e ingresa nuevamente.");
+  }
+
+  if (!allowedService(data.participante.servicio)) {
+    throw new Error("Este curso está disponible únicamente para Walmart La Naranja.");
+  }
+
+  participant = data.participante;
+  return participant;
+}
+
+async function saveResult(answers) {
+  if (savingResult) return null;
+  savingResult = true;
+
+  try {
+    const currentParticipant = await getParticipant();
+    const response = await fetch(API_URL + "/api/portal/la-naranja/resultados", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: "Bearer " + accessToken } : {})
+      },
+      body: JSON.stringify({
+        respuestas: answers,
+        modalidad: MODALIDAD,
+        numero_empleado_sesion: currentParticipant.numero_empleado
+      })
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(
+        response.status === 401
+          ? "Tu acceso venció. Vuelve al portal e ingresa otra vez."
+          : data.mensaje || "No fue posible guardar la calificación."
+      );
+    }
+    return data;
+  } finally {
+    savingResult = false;
+  }
+}
+
 const slides = [
   {
     type:"hero",
@@ -290,30 +376,62 @@ function renderQuiz(){
   card.querySelector("#gradeBtn").addEventListener("click", gradeQuiz);
 }
 
-function gradeQuiz(){
+async function gradeQuiz(){
+  const answers = [];
   let correct = 0;
+
   quiz.forEach((item,i)=>{
     const selected = card.querySelector(`input[name="q${i}"]:checked`);
-    if(selected && Number(selected.value) === item.a) correct++;
+    const answer = selected ? Number(selected.value) : null;
+    answers.push(answer);
+    if(answer === item.a) correct++;
   });
-  const score = correct * 10;
-  const passed = score >= 80;
-  const result = card.querySelector("#quizResult");
-  result.className = `result ${passed ? "ok" : "bad"}`;
-  result.innerHTML = passed
-    ? `✅ APROBADO — ${score}/100 (${correct} de 10 correctas)`
-    : `❌ NO APROBADO — ${score}/100 (${correct} de 10 correctas). Revisa el contenido e inténtalo nuevamente.`;
 
-  window.dispatchEvent(new CustomEvent("cursoFinalizado", {
-    detail: {
-      curso: "Consignas Específicas Walmart La Naranja",
-      servicio: "WALMART LA NARANJA",
-      calificacion: score,
-      aprobado: passed,
-      correctas: correct,
-      total: 10
-    }
-  }));
+  const result = card.querySelector("#quizResult");
+  const gradeButton = card.querySelector("#gradeBtn");
+
+  if (answers.includes(null)) {
+    result.className = "result bad";
+    result.textContent = "Responde las 10 preguntas antes de finalizar la evaluación.";
+    return;
+  }
+
+  const localScore = correct * 10;
+  const localPassed = localScore >= 80;
+  result.className = `result ${localPassed ? "ok" : "bad"}`;
+  result.innerHTML = localPassed
+    ? `✅ APROBADO — ${localScore}/100 (${correct} de 10 correctas)<br><span class="small">Guardando calificación…</span>`
+    : `❌ NO APROBADO — ${localScore}/100 (${correct} de 10 correctas).<br><span class="small">Guardando calificación…</span>`;
+
+  gradeButton.disabled = true;
+
+  try {
+    const saved = await saveResult(answers);
+    if (!saved) return;
+
+    const serverScore = Number(saved.calificacion ?? localScore);
+    const serverPassed = Boolean(saved.aprobado);
+    const serverCorrect = Math.round(serverScore / 10);
+
+    result.className = `result ${serverPassed ? "ok" : "bad"}`;
+    result.innerHTML = serverPassed
+      ? `✅ APROBADO — ${serverScore}/100 (${serverCorrect} de 10 correctas)<br><span class="small">Calificación guardada correctamente. Intento: ${saved.intento || "registrado"}.</span>`
+      : `❌ NO APROBADO — ${serverScore}/100 (${serverCorrect} de 10 correctas).<br><span class="small">Calificación guardada correctamente. Intento: ${saved.intento || "registrado"}.</span>`;
+
+    window.dispatchEvent(new CustomEvent("cursoFinalizado", {
+      detail: {
+        curso: "Consignas específicas — Walmart La Naranja",
+        servicio: participant?.servicio || "WALMART LA NARANJA",
+        calificacion: serverScore,
+        aprobado: serverPassed,
+        correctas: serverCorrect,
+        total: 10
+      }
+    }));
+  } catch (error) {
+    result.innerHTML += `<br><span class="small">Guardado sin confirmar: ${error.message} Puedes volver a pulsar “Calificar evaluación” para reintentar.</span>`;
+    gradeButton.disabled = false;
+  }
 }
 
 prevBtn.addEventListener("click",()=>{
