@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consignas Específicas Walmart La Naranja</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="course-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">HOPLON CAPACITACIÓN</p>
+        <h1>Consignas Específicas Walmart La Naranja</h1>
+      </div>
+      <div class="progress-wrap" aria-label="Progreso del curso">
+        <span id="progressText">1 / 14</span>
+        <div class="progress"><div id="progressBar"></div></div>
+      </div>
+    </header>
+
+    <section id="courseCard" class="course-card" aria-live="polite"></section>
+
+    <nav class="nav-row">
+      <button id="prevBtn" class="btn secondary" type="button">← Anterior</button>
+      <button id="nextBtn" class="btn primary" type="button">Siguiente →</button>
+    </nav>
+  </main>
+
+  <template id="quizTemplate">
+    <div class="quiz">
+      <p class="eyebrow">EVALUACIÓN FINAL</p>
+      <h2>Consignas Walmart La Naranja</h2>
+      <p>Responde las 10 preguntas. Calificación mínima aprobatoria: <strong>80%</strong>.</p>
+      <form id="quizForm"></form>
+      <div id="quizResult" class="result hidden"></div>
+      <button id="gradeBtn" class="btn primary" type="button">Calificar evaluación</button>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
