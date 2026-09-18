@@ -112,7 +112,6 @@ async function saveResult(answers) {
           : data.mensaje || "No fue posible guardar la calificación."
       );
     }
-    clearAttemptId();
     return data;
   } finally {
     savingResult = false;
@@ -452,6 +451,8 @@ async function gradeQuiz(){
     ) {
       throw new Error("El servidor no confirmó por completo el registro del resultado.");
     }
+
+    clearAttemptId();
 
     const serverScore = Number(saved.calificacion);
     const serverPassed = Boolean(saved.aprobado);
