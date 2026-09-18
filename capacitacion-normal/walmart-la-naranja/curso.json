@@ -1,0 +1,19 @@
+{
+  "id": "walmart-la-naranja",
+  "curso": "Consignas Específicas Walmart La Naranja",
+  "nombre": "Consignas Específicas Walmart La Naranja",
+  "descripcion": "Curso de consignas específicas para el servicio Walmart La Naranja.",
+  "servicios": [
+    "WALMART LA NARANJA",
+    "LA NARANJA",
+    "WALMART NARANJA"
+  ],
+  "activo": true,
+  "tipo": "elearning",
+  "ruta": "capacitacion-normal/walmart-la-naranja/index.html",
+  "evaluacion": {
+    "preguntas": 10,
+    "aprobatorio": 80,
+    "respuestas": ["B","B","B","C","B","C","C","B","B","A"]
+  }
+}
