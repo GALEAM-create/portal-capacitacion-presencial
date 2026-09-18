@@ -54,7 +54,8 @@ function allowedService(value) {
   return [
     "WALMART LA NARANJA",
     "LA NARANJA",
-    "WALMART NARANJA"
+    "WALMART NARANJA",
+    "WALMART"
   ].includes(normalizeService(value));
 }
 
