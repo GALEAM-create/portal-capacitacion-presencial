@@ -444,7 +444,16 @@ async function gradeQuiz(){
     const saved = await saveResult(answers);
     if (!saved) return;
 
-    const serverScore = Number(saved.calificacion ?? localScore);
+    if (
+      !saved.id ||
+      !Number.isFinite(Number(saved.calificacion)) ||
+      !Number.isFinite(Number(saved.intento)) ||
+      saved.modalidad !== "E-LEARNING"
+    ) {
+      throw new Error("El servidor no confirmó por completo el registro del resultado.");
+    }
+
+    const serverScore = Number(saved.calificacion);
     const serverPassed = Boolean(saved.aprobado);
     const serverCorrect = Math.round(serverScore / 10);
 
