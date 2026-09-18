@@ -12,6 +12,8 @@ const DIAMANTE_QUESTIONS=[
 ];
 const API_URL="https://capacitacion-production-3120.up.railway.app";
 const MODALIDAD="E-LEARNING";
+const params=new URLSearchParams(location.hash.slice(1)),accessToken=String(params.get('token')||'').trim();
+if(accessToken)history.replaceState(null,'',location.pathname+'#portada');
 let participant=null,payload=null,saving=false,graded=false,deadline=0,timer=null;
 const form=document.querySelector('#diamante-exam-form'),begin=document.querySelector('#begin-exam'),clock=document.querySelector('#exam-clock'),message=document.querySelector('#exam-message'),result=document.querySelector('#exam-result'),score=document.querySelector('#exam-score'),retry=document.querySelector('#retry-save');
 function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -21,7 +23,7 @@ async function save(){
  if(saving||!payload||window.diamanteExamFinished)return;
  saving=true;retry.hidden=true;message.textContent='Guardando calificación…';
  try{
-  const r=await fetch(API_URL+'/api/portal/diamante/resultados',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const r=await fetch(API_URL+'/api/portal/diamante/resultados',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json',...(accessToken?{Authorization:`Bearer ${accessToken}`}:{})},body:JSON.stringify(payload)});
   const d=await r.json().catch(()=>({}));
   if(!r.ok)throw new Error(r.status===401?'Tu sesión terminó. Vuelve a ingresar al portal y reintenta.':d.mensaje||'No fue posible guardar el resultado.');
   window.diamanteExamFinished=true;
@@ -47,7 +49,7 @@ function tick(){const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));clo
 begin.addEventListener('click',async()=>{
  begin.disabled=true;message.textContent='Validando sesión…';
  try{
-  const r=await fetch(API_URL+'/api/portal/session',{credentials:'include',cache:'no-store'}),d=await r.json().catch(()=>({}));
+  const r=await fetch(API_URL+'/api/portal/session',{credentials:'include',cache:'no-store',headers:accessToken?{Authorization:`Bearer ${accessToken}`}:{}}),d=await r.json().catch(()=>({}));
   if(!r.ok||!d.autenticado||!d.participante)throw new Error('Ingresa al portal antes de iniciar la evaluación.');
   if(!allowed(d.participante.servicio))throw new Error('Esta evaluación está disponible únicamente para WALMART DIAMANTE.');
   participant=d.participante;
