@@ -8,6 +8,39 @@ if (accessToken) {
 let participant = null;
 let savingResult = false;
 
+const ATTEMPT_ID_KEY = "walmart_la_naranja_envio_id";
+const ATTEMPT_ANSWERS_KEY = "walmart_la_naranja_respuestas";
+
+function uuidV4() {
+  if (window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, char => {
+    const random = Math.floor(Math.random() * 16);
+    const value = char === "x" ? random : (random & 0x3) | 0x8;
+    return value.toString(16);
+  });
+}
+
+function getAttemptId(answers) {
+  const serialized = JSON.stringify(answers);
+  const savedAnswers = sessionStorage.getItem(ATTEMPT_ANSWERS_KEY);
+  let id = sessionStorage.getItem(ATTEMPT_ID_KEY);
+
+  if (!id || savedAnswers !== serialized) {
+    id = uuidV4();
+    sessionStorage.setItem(ATTEMPT_ID_KEY, id);
+    sessionStorage.setItem(ATTEMPT_ANSWERS_KEY, serialized);
+  }
+
+  return id;
+}
+
+function clearAttemptId() {
+  sessionStorage.removeItem(ATTEMPT_ID_KEY);
+  sessionStorage.removeItem(ATTEMPT_ANSWERS_KEY);
+}
+
 function normalizeService(value) {
   return String(value || "")
     .normalize("NFD")
@@ -64,6 +97,7 @@ async function saveResult(answers) {
         ...(accessToken ? { Authorization: "Bearer " + accessToken } : {})
       },
       body: JSON.stringify({
+        envio_id: getAttemptId(answers),
         respuestas: answers,
         modalidad: MODALIDAD,
         numero_empleado_sesion: currentParticipant.numero_empleado
@@ -78,6 +112,7 @@ async function saveResult(answers) {
           : data.mensaje || "No fue posible guardar la calificación."
       );
     }
+    clearAttemptId();
     return data;
   } finally {
     savingResult = false;
